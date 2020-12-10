@@ -289,7 +289,8 @@ router.post('/reset_password/:token', async (req, res, next) => {
       });
     }
 
-    const password_hash = await bcrypt.hash(newPassword, config.get('auth.saltRounds'));
+    // const password_hash = await bcrypt.hash(newPassword, config.get('auth.saltRounds'));
+    const password_hash = await bcrypt.hash(newPassword, 10);
     debug('future games');
     debug(password_hash);
     debug(payload.email);
