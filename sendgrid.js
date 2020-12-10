@@ -52,7 +52,7 @@ const sendVerifyEmail = async (user) => {
     // to: config.get('sendgrid.to') || user.email,
     to: user.email,
     templateId: config.get('sendgrid.templates.verifyEmail'),
-    dynamicTemplateData: { token: token, url: `http://localhost:3004/account/verify_email/${token}` },
+    dynamicTemplateData: { token: token, url: `tripadvocate.herokuapp.com/account/verify_email/${token}` },
     trackingSettings: {
       clickTracking: { enable: false },
       openTracking: { enable: false },
@@ -77,7 +77,7 @@ const sendResetPassword = async (user) => {
     // to: config.get('sendgrid.to') || user.email,
     to: user.email,
     templateId: config.get('sendgrid.templates.resetPassword'),
-    dynamicTemplateData: { token: token, url: `http://localhost:3004/account/reset_password/${token}` },
+    dynamicTemplateData: { token: token, url: `tripadvocate.herokuapp.com/account/reset_password/${token}` },
     trackingSettings: {
       clickTracking: { enable: false },
       openTracking: { enable: false },
