@@ -9,51 +9,14 @@ const admin = require('../middleware/admin');
 const uploadImg = require('../middleware/multer');
 const path = require('path');
 const Joi = require('joi');
-// const crypto = require('crypto');
-// const util = require('util');
-// const multer = require('multer');
-// const GridFsStorage = require('multer-gridfs-storage');
-
-// old storage that worked for local.
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, './public/uploads');
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, Date.now() + '_' + file.originalname);
-//   },
-// });
-// const upload = multer({ storage: storage });
-
-// new storage that uses gridFS with upload
-
-// const storage = new GridFsStorage({
-//   url: config.get('db.url'),
-//   options: { useNewUrlParser: true, useUnifiedTopology: true },
-//   file: (req, file) => {
-//     const match = ['image/png', 'image/jpeg'];
-
-//     if (match.indexOf(file.mimetype) === -1) {
-//       const filename = `${Date.now()}-bezkoder-${file.originalname}`;
-//       return filename;
-//     }
-
-//     return {
-//       bucketName: 'photos',
-//       filename: `${Date.now()}-bezkoder-${file.originalname}`,
-//     };
-//   },
-// });
-
-// const upload = multer({ storage: storage });
+const { JsonWebTokenError } = require('jsonwebtoken');
 
 // creating router
 const router = express.Router();
 router.use(express.urlencoded({ extended: false }));
 router.use(express.json());
-// router.use(auth);
 
-// general error handler
+// GENERAL ERROR HANDLER
 const sendError = (err, res) => {
   debug(err);
   if (err.isJoi) {
@@ -62,22 +25,25 @@ const sendError = (err, res) => {
     res.json({ error: err.message });
   }
 };
-
+// POST THAT ADDS PLACE INCLUDING UPLOADING PHOTO.
 router.post('/', auth, admin, uploadImg().single('uploaded_file'), async (req, res, next) => {
   debug(`insert place ${JSON.stringify(req.body)}`);
   try {
     const schema = Joi.object({
+      _id: Joi.string().allow(''),
       name: Joi.string().required(),
       category: Joi.string().required(),
       city: Joi.string().required(),
-      state: Joi.string(),
+      state: Joi.string().allow('').min(2),
       country: Joi.string().required(),
-      description: Joi.string().required(),
+      description: Joi.string().allow('').min(10),
       image: Joi.string(),
     });
 
     const place = await schema.validateAsync(req.body, { abortEarly: false });
-    place.image = req.file.filename;
+    if (req.file) {
+      place.image = req.file.filename;
+    }
     debug(req.file);
     const result = await db.upsertPlace(place);
     res.json(result);
@@ -86,7 +52,7 @@ router.post('/', auth, admin, uploadImg().single('uploaded_file'), async (req, r
   }
 });
 
-// GET ALL
+// GET ALL, THE BIG QUERY, GOES AT THE TOP.
 router.get('/', auth, async (req, res, next) => {
   debug('get all');
   try {
@@ -162,18 +128,7 @@ router.get('/', auth, async (req, res, next) => {
   }
 });
 
-// GET ALL
-// router.get('/', async (req, res, next) => {
-//   debug('get all');
-//   try {
-//     const places = await db.getAllPlaces();
-//     res.json(places);
-//   } catch (err) {
-//     sendError(err, res);
-//   }
-// });
-
-// GET SINGLE
+// GET - FOCUSED VIEW OF SINGLE PLACE.
 router.get('/:id', async (req, res, next) => {
   debug(`find by id`);
   try {
@@ -181,53 +136,6 @@ router.get('/:id', async (req, res, next) => {
     const id = await schema.validateAsync(req.params.id);
     const findPlaceById = await db.findPlaceById(id);
     res.json(findPlaceById);
-  } catch (err) {
-    sendError(err, res);
-  }
-});
-// GET CATEGORY
-router.get('/category/:category', async (req, res, next) => {
-  debug(`find by category`);
-  try {
-    const schema = Joi.string().min(1).required().label('category');
-    const category = await schema.validateAsync(req.params.category);
-    const findPlacesByCategory = await db.findPlacesByCategory(category);
-    res.json(findPlacesByCategory);
-  } catch (err) {
-    sendError(err, res);
-  }
-});
-
-// GET TITLE
-// router.get('/title/:title', async (req, res, next) => {
-//   debug(`find by title`);
-//   try {
-//     const schema = Joi.string().min(4).required().label('title');
-//     const title = await schema.validateAsync(req.params.title);
-//     debug(`${title.length}`);
-//     const findPlacesByTitle = await db.findPlacesByTitle(title);
-//     res.json(findPlacesByTitle);
-//   } catch (err) {
-//     sendError(err, res);
-//   }
-// });
-
-// POST
-router.post('/', async (req, res, next) => {
-  debug(`insert place ${JSON.stringify(req.body)}`);
-  try {
-    const schema = Joi.object({
-      name: Joi.string().required(),
-      category: Joi.string().min(4).required(),
-      city: Joi.string().required(),
-      state: Joi.string(),
-      country: Joi.string().required(),
-      image: Joi.string(),
-    });
-    // const place = req.body;
-    const place = await schema.validateAsync(req.body);
-    const result = await db.insertPlace(place);
-    res.json(result);
   } catch (err) {
     sendError(err, res);
   }
@@ -289,3 +197,24 @@ router.post('/upload', uploadImg().single('uploaded_file'), async (req, res, nex
 module.exports = router;
 
 //https://stackoverflow.com/questions/31496100/cannot-app-usemulter-requires-middleware-function-error
+
+// POST
+// router.post('/', async (req, res, next) => {
+//   debug(`insert place ${JSON.stringify(req.body)}`);
+//   try {
+//     const schema = Joi.object({
+//       name: Joi.string().required(),
+//       category: Joi.string().min(4).required(),
+//       city: Joi.string().required(),
+//       state: Joi.string(),
+//       country: Joi.string().required(),
+//       image: Joi.string(),
+//     });
+//     // const place = req.body;
+//     const place = await schema.validateAsync(req.body);
+//     const result = await db.insertPlace(place);
+//     res.json(result);
+//   } catch (err) {
+//     sendError(err, res);
+//   }
+// });

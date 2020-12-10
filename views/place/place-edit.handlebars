@@ -42,7 +42,7 @@
 
   <form id="add-place-form-modal" enctype="multipart/form-data" action="/api/place" method="POST"
     class="form needs-validation mt-3" novalidate>
-    <input type="text" value="{{place._id}}">
+    <input type="text" value="{{place._id}}" name="_id">
     <div class="form-group">
       <label for="name">Name</label>
       <input type="text" class="form-control" name="name" id="name" value="{{place.name}}">
