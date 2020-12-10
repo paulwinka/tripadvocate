@@ -1,0 +1,83 @@
+<main class="container mt-5">
+  <div class="row">
+    <div class="col-md-8">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/review">Reviews</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Review ID: {{review.review_id}}</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  {{!-- <div id="message">This is my modal</div> --}}
+  <div class="modal fade" tabindex="-1" role="dialog" id="message">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Review</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="edit-review-form" action="/api/review/{{review.review_id}}" method="PUT">
+            <div class="form-group">
+              <input type="hidden" class="form-control" name="review_id" id="review_id" value="{{review.review_id}}">
+            </div>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" class="form-control" name="title" id="title" value="{{review.headline}}">
+              <div id="review_title_error" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+              <label for="review_text">Review Text</label>
+              <textarea id="review_text" class="form-control" name="review_text" rows="4"
+                cols="50">{{review.review_text}}</textarea>
+              <div id="state-error" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary" type="submit">Save</button>
+            </div>
+            <div class="form-group">
+              <output class="text-danger"></output>
+            </div>
+          </form>
+        </div>
+        {{!-- <div class="modal-footer">
+              <button type="button" class="btn btn-primary">Save changes</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div> --}}
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title h2 mb-0 font-weight-bold">
+            <div>
+              {{review.place_name}}
+            </div>
+          </div>
+          <div>
+            {{review.place_city}}, {{review.place_state}} {{review.place_country}}
+          </div>
+          <div class="mb-3">Category: {{review.category}}</div>
+          <div class="mb-3 font-italic">"{{review.headline}}"</div>
+          <p class="text-left alt-background">{{review.review_text}}</p>
+          <div>By: {{review.first_name}} {{review.last_name}}</div>
+          <div class="mb-3">From: {{review.user_city}}, {{review.user_state}} {{review.user_country}}</div>
+          <a href="/review/edit/{{review.review_id}}" class="btn btn-primary">Edit Review</a>
+          <button id="edit-review-button-modal" class="btn btn-info" data-id="{{review.review_id}}"
+            data-title="{{review.headline}}">Ajax Edit Review!</a>
+          <button id="delete-review-from-view" class="btn btn-danger" data-id="{{review.review_id}}"
+            data-title="{{review.headline}}">Delete Review</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</main>

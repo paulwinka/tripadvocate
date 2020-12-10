@@ -1,0 +1,30 @@
+{{#if reviews}}
+{{> pager pager}}
+<div class="row">
+  {{#each reviews}}
+  <div class="col-lg-6">
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="card-title h4">
+          <a href="/review/{{review_id}}">{{place_name}}</a>
+        </h2>
+        <div>{{place_city}}, {{place_state}} {{place_country}}</div>
+        <div>Category: {{category}}</div>
+        <div>"{{headline}}"</div>
+        <div class="mb-3">By: {{user_email}}</div>
+        <div>
+          <a href="/review/edit/{{review_id}}" class="btn btn-primary">Edit</a>
+          <button class="btn btn-danger delete-review-from-list" data-id="{{review_id}}"
+            data-title="{{place_name}}">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+{{> pager pager}}
+{{else}}
+<div>
+  There are no reviews.
+</div>
+{{/if}}

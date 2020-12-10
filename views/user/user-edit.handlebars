@@ -1,0 +1,46 @@
+<main class="container mt-5">
+  <h1>Edit User</h1>
+  <form id="edit-user-form" action="/api/user/{{user.user_id}}" method="POST">
+    <div class="form-group">
+      <label for="user_id">User ID</label>
+      <input type="text" class="form-control" name="user_id" id="user_id" value="{{user.user_id}}">
+      <div id="user-id-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="first_name">First Name</label>
+      <input type="text" class="form-control" name="first_name" id="first_name" value="{{user.first_name}}">
+      <div id="first-name-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="last_name">Last Name</label>
+      <input type="text" class="form-control" name="last_name" id="last_name" value="{{user.last_name}}">
+      <div id="last-name-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" name="email" id="email" value="{{user.email}}">
+      <div id="email-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="city">City</label>
+      <input type="text" class="form-control" name="city" id="city" value="{{user.city}}">
+      <div id="city-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="state">State</label>
+      <input type="text" class="form-control" name="state" id="state" value="{{user.state}}">
+      <div id="state-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="country">Country</label>
+      <input type="text" class="form-control" name="country" id="country" value="{{user.country}}">
+      <div id="country-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+    <div class="form-group">
+      <output class="text-danger"></output>
+    </div>
+  </form>
+</main>

@@ -1,0 +1,72 @@
+$('#search-results').append(`
+<div class="col-lg-4">
+  <div class="card mb-3">
+    <img class="card-img-top" src="/images/${item.image ? item.image.filename : `slam.jpg`}" alt=""></img>
+    <div class="card-header">
+      <h5 class="card-title text-primary"><a href="/place/${item._id}">${item.name}</a></h5>
+    </div>
+    <div class="card-body">
+      <h6 class="card-subtitle mb-2 text-white badge badge-info">${item.category}</h6>
+      <h6 class="card-subtitle mb-2 text-white">
+        ${item.city},
+        ${item.state ? item.state + `,` : ` `}
+        ${item.country}
+        ${item.relevance}
+      </h6>
+    </div>
+    <div class="card-footer">
+    </div>
+  </div>
+</div>
+
+<div class="col col-md-6 col-lg-4 col-xl-3 rounding-edge">
+  <div class="card mb-3 rounding-edge">
+    <a href="/pet/${item._id}"><img class="card-img-top rounding-edge" src="/uploads/${
+          item.image ? item.image.filename : `slam.jpg`
+        }" alt=""></img></a>
+    <div class="card-body">
+      <div class="d-flex flex-row">
+        <a href="/pet/${item._id}">${item.name} &nbsp; </a>/${
+        item.age != 1 ? ` ${item.age} yrs old` : '1 yr old'
+        } </div>
+      <div class="d-flex flex-row">
+        ${item.animal}, ${item.breed}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="col">
+  <div class="card mb-1 d-flex flex-row justify-content-around">
+    <div class="d-flex flex-row justify-content-start">
+        <div class="card-body d-flex flex-row">
+      ${ item.image ? `<img class="card-img-top thumbnail" src="/uploads/` + item.image.filename + `" alt=""></img>`
+      : `` }
+    </div>
+    <div class="card-body d-flex flex-row">
+      ${item.name}: ${item.city} ${item.state || ''} ${item.country}
+    </div>
+  </div>
+  <div class="card-body d-flex justify-content-end">
+    <a href="/user/{{user_id}}" id="btnEditPlace" class="btn btn-sm btn-info" title="View User">
+      <i class="fas fa-eye"></i>
+      <span class="sr-only">View User</span>
+    </a>
+    <a href="/user/edit/{{user_id}}" id="btnEditPlace" class="btn btn-primary btn-sm" title="Edit User">
+      <i class="fas fa-edit"></i>
+      <span class="sr-only">Edit User</span>
+    </a>
+    <button title="Delete User" class="delete-user-from-list btn btn-sm btn-danger" data-user="{{user_id}}"
+      data-emoji="{{emoji_id}}">
+      <i class="fas fa-trash"></i>
+      <span class="sr-only">Delete User</span>
+    </button>
+  </div>
+</div>
+</div>

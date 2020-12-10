@@ -1,0 +1,26 @@
+{
+  "http": {
+    "hostname": "localhost",
+    "port": 3004
+  },
+  "db": {
+    "url": "mongodb+srv://paul_winka:5016pimlico@cluster0.ht4ef.mongodb.net/",
+    "name": "travel",
+    "poolSize": 5
+  },
+  "auth": {
+    "saltRounds": 10,
+    "secret": "",
+    "expires": 3600000
+  },
+  "sendgrid": {
+    "apiKey": "",
+    "from": "",
+    "to": "",
+    "secret": "",
+    "templates": {
+      "verifyEmail": "d-939ac8e02ae74d3abd89afcbab6a8553",
+      "resetPassword": "d-2dbfacd5189c4abdb05186aff734802e"
+    }
+  }
+}

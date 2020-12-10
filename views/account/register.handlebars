@@ -1,0 +1,45 @@
+<form id="register" method="POST" class="form needs-validation mt-3 {{#if isPost}}was-validated{{/if}}" novalidate>
+  <div class="my-3 font-weight-bold text-center">Register Account</div>
+  <div class="form-group">Please complete the following form to create an account on our website.</div>
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input id="username" name="username" class="form-control {{#if usernameErrorNotUnique}}is-invalid{{/if}}"
+      type="text" value="{{username}}" required>
+    {{#if usernameErrorNotUnique}}
+    <div class="invalid-feedback">{{usernameErrorNotUnique}}</div>
+    {{else}}
+    <div class="invalid-feedback">Please enter a unique username.</div>
+    {{/if}}
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input id="email" name="email" class="form-control {{#if emailTakenError}} is-invalid {{/if}}" type="email"
+      value="{{email}}" required>
+    {{#if emailTakenError}}
+    <div class="invalid-feedback">{{emailTakenError}}</div>
+    {{else}}
+    <div class="invalid-feedback">Please enter a valid address.</div>
+    {{/if}}
+  </div>
+  <div class="form-group">
+    <label for="password">Password {{error}} </label>
+    <input id="password" name="password" class="form-control" type="password" value="{{password}}" required>
+    <div class="invalid-feedback"> Please enter your password.</div>
+    {{!-- <output class="text-danger">{{data.passwordError}}</output> --}}
+  </div>
+  <div class="form-group">
+    <label for="password_confirm">Confirm Password</label>
+    <input id="password_confirm" name="password_confirm" class="form-control" type="password"
+      value="{{password_confirm}}" required>
+    <div class="invalid-feedback"> Please confirm passwords.</div>
+    {{!-- <output class="text-danger">{{data.password_confirmError}}</output> --}}
+  </div>
+  <div class="form-group">
+    <button class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Register</button>
+  </div>
+  <div class="form-group">
+    {{!-- <div class="invalid-feedback"> {{error}} </div> --}}
+
+    <output class="text-danger">{{catchError}}</output>
+  </div>
+</form>

@@ -1,0 +1,62 @@
+html, body {
+  font-size: 1rem;
+  font-family: 'Inconsolata', monospace;
+}
+
+fieldset {
+  border: 2px solid yellow;
+}
+
+legend {
+  width: auto;
+}
+
+.userBannerAdmin {
+  color: white;
+  background-color: slateblue;
+  padding: 0.5rem 1rem;
+  border-radius: 3rem;
+  align-self: center;
+  margin-right: 1rem;
+}
+
+.userBannerMember {
+  color: white;
+  background-color: gray;
+  padding: 0.5rem 1rem;
+  border-radius: 3rem;
+  align-self: center;
+  margin-right: 1rem;
+}
+
+.card {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+}
+
+.gallery {
+  align-self: center;
+  max-width: 30%;
+}
+
+.alt-background {
+  background-color: black;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
+
+.thumbnail {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 50px;
+  height: auto;
+}
+
+.rounding-edge {
+  border-radius: 5%;
+}

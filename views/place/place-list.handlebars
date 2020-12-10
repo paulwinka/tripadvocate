@@ -1,0 +1,123 @@
+<main class="container mt-5">
+  <div class="d-flex flex-column justify-content-between align-items-center mb-3">
+    {{> button-menu}}
+    <h1>Places to see, things to do!</h1>
+  </div>
+
+
+  <form id="search-place-form" method="GET">
+    <fieldset>
+      <legend>Search</legend>
+      <div class="form-group">
+        <label for="search" class="">
+          Search
+        </label>
+        <div class="input-group mb-3">
+          <input id="placeSearch" name="q" type="search" class="form-control" placeholder="search..."
+            value="{{search}}" />
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-primary"> Search </button>
+            <input class="btn btn-secondary" type="reset" value="Reset">
+          </div>
+        </div>
+      </div>
+      <div class="d-flex  flex-column flex-sm-row">
+        <div class="form-group d-flex flex-column">
+          <label for="category" class=""> category </label>
+          <select id="category-drop" name="category" class="custom-select w-auto">
+            {{> select-option-list categoryOptionList}}
+          </select>
+        </div>
+        <div class="form-group d-flex flex-column">
+          <label for="sortBy" class=""> sort by: </label>
+          <select id="sortBy" name="sortBy" class="custom-select w-auto">
+            {{> select-option-list sortingOptionList}}
+          </select>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+
+
+
+  {{!-- ADD PLACE MODAL --}}
+  {{!-- <div id="message">This is my modal</div> --}}
+  <div class="modal fade" tabindex="-1" role="dialog" id="message">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Place</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="add-place-form-modal" action="/api/place" method="POST">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" name="name" id="name">
+              <div id="title-error" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+              <label for="category">Category</label>
+              <input type="text" class="form-control" name="category" id="category">
+              <div id="category-error" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" class="form-control" name="city" id="city">
+              <div id="city-error" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+              <label for="state">State</label>
+              <input type="text" class="form-control" name="state" id="state">
+              <div id="state-error" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input type="text" class="form-control" name="country" id="country">
+              <div id="country-error" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+              <label for="uploaded_file">Image</label>
+              <input type="file" class="form-control-file" name="uploaded_file" id="uploaded_file">
+            </div>
+            <div class="form-group d-none" id="image_preview">
+              <label for="image_preview">Image Preview</label>
+              <img width="200px" height="auto" id="pet_image" alt="your image" />
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary" type="submit">Add Place</button>
+            </div>
+            <div class="form-group">
+              <output class="text-danger"></output>
+            </div>
+          </form>
+        </div>
+        {{!-- <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div> --}}
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <div class="d-flex align-items-center">
+    <span id="stream-data-spinner" class="spinner-border m-2"></span>
+    <span id="stream-data-seen" class="m-2" style="font-weight: 900;">
+      Loading...
+    </span>
+  </div>
+  <div id="stream-data" class="d-flex flex-wrap"></div>
+  <div id="search-results" class="d-flex flex-wrap">
+  </div>
+</main>
+
+<script src="/js/oboe-browser.min.js"></script>
+<script defer src="/js/oboe-place.js"></script>

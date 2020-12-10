@@ -1,0 +1,136 @@
+<main class="container mt-5">
+  <div class="row">
+    <div class="col-md-8">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin">Main Admin Dashboard</a></li>
+          <li class="breadcrumb-item"><a href="/user/admin">Administrate Users</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{userToView.username}}</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-img-top text-center">
+          <div class="card-body text-left">
+
+            <li class="list-group-item py-1">id: {{userToView._id}}</li>
+            <li class="list-group-item py-1">username: {{userToView.username}}</li>
+            <li class="list-group-item py-1">first name: {{userToView.first_name}}</li>
+            <li class="list-group-item py-1">last name: {{userToView.last_name}}</li>
+            <li class="list-group-item py-1">email: {{userToView.email}}</li>
+            <li class="list-group-item py-1">email verified: {{userToView.is_email_verified}}</li>
+            <li class="list-group-item py-1">password: {{userToView.password}}</li>
+            <li class="list-group-item py-1">city: {{userToView.city}}</li>
+            <li class="list-group-item py-1">state: {{userToView.state}}</li>
+            <li class="list-group-item py-1">Country: {{userToView.country}}</li>
+            <li class="list-group-item py-1">registration time: {{formatDatetime userToView.registration_time}}</li>
+            <li class="list-group-item py-1 mb-2">last login time: {{formatDatetime userToView.last_login_time}}</li>
+            {{!-- OLD EDIT BUTTON --}}
+            {{!-- <a href="/user/edit/{{userToView.user_id}}" class="btn btn-primary">Edit User</a> --}}
+            {{!-- EDIT USER BUTTON --}}
+            <td class="text-center">
+              <button class="edit-user-button-for-modal btn btn-primary" data-toggle="modal" data-target="#edit_user"
+                data-id="{{userToView._id}}" data-first="{{userToView.first_name}}" data-last="{{userToView.last_name}}"
+                data-username="{{userToView.username}}" data-role={{userToView.role}} data-city="{{userToView.city}}"
+                data-state="{{userToView.state}}" data-country="{{userToView.country}}">
+                <i class="fas fa-edit"></i>Edit User</button></td>
+
+            <button id="delete-user-from-view" href="/user/edit/{{place.place_id}}" class="btn btn-danger"
+              data-id="{{userToView.user_id}}" data-title="{{userToView.first_name}} {{userToView.last_name}} ">Delete
+              User</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{#each reviews}}
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">
+            {{place_title}}
+          </div>
+          <div class="card-subtitle">{{review_title}}</div>
+          <div class="card-text">
+            {{review_text}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</main>
+
+
+{{!-- EDIT MODAL --}}
+<div class="modal fade" tabindex="-1" role="dialog" id="edit_user">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="edit-user-form-modal" id="edit-user-form-modal" action="/api/user/{{userToView._id}}" method="PUT"
+          data-id="{{userToView._id}}">
+          <input type="hidden" name="_id" id="_id">
+          <div class="form-group">
+            <label for="first_name">first name</label>
+            <input type="text" class="form-control" name="first_name" id="first_name">
+            <div id="first-name-error" class="text-danger"></div>
+          </div>
+          <div class="form-group">
+            <label for="last_name">last name</label>
+            <input type="text" class="form-control" name="last_name" id="last_name">
+            <div id="last-name-error" class="text-danger"></div>
+          </div>
+          <div class="form-group">
+            <label for="username">username</label>
+            <input type="text" class="form-control" name="username" id="username">
+            <div id="username-error" class="text-danger"></div>
+          </div>
+          <div class="form-group">
+            <label for="role">Role</label>
+            <select name="role" id="role">
+              {{#if (eq userToEdit.role 'admin')}}
+              <option selected="admin">admin</option>
+              <option value="member">member</option>
+              {{else}}
+              <option selected="member">member</option>
+              <option value="admin">admin</option>
+              {{/if}}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="city">city</label>
+            <input type="text" class="form-control" name="city" id="city">
+            <div id="city-error" class="text-danger"></div>
+          </div>
+          <div class="form-group">
+            <label for="state">state</label>
+            <input type="text" class="form-control" name="state" id="state">
+            <div id="state-error" class="text-danger"></div>
+          </div>
+          <div class="form-group">
+            <label for="country">country</label>
+            <input type="text" class="form-control" name="country" id="country">
+            <div id="country-error" class="text-danger"></div>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary" type="submit" data-id="{{emoji_id}}"><i class="fas fa-save"></i> Save User
+            </button>
+          </div>
+          <div class=" form-group">
+            <output class="text-danger"></output>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

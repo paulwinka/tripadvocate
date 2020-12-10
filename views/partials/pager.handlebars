@@ -1,0 +1,81 @@
+{{#if pages}}
+  <nav class="d-flex justify-content-end">
+    <ul class="pagination">
+      {{#if firstUrl}}
+        <li class="page-item">
+          <a class="page-link" href="{{firstUrl}}" aria-label="First">
+            <span aria-hidden="true">
+              &laquo;
+            </span>
+          </a>
+        </li>
+      {{else}}
+        <li class="page-item disabled">
+          <a class="page-link" href="#">
+            <span tabindex="-1" aria-disabled="true" aria-hidden="true">
+              &laquo;
+            </span>
+          </a>
+        </li>
+      {{/if}}
+      {{#if prevUrl}}
+        <li class="page-item">
+          <a class="page-link" href="{{prevUrl}}" aria-label="Previous">
+            <span aria-hidden="true">
+              &lsaquo;
+            </span>
+          </a>
+        </li>
+      {{else}}
+        <li class="page-item disabled">
+          <a class="page-link" href="#">
+            <span tabindex="-1" aria-disabled="true" aria-hidden="true">
+              &lsaquo;
+            </span>
+          </a>
+        </li>
+      {{/if}}
+      {{#each pages}}
+        <li class="page-item {{tern active "active" ""}}">
+          <a class="page-link" href="{{url}}">
+            {{text}}
+          </a>
+        </li>
+      {{/each}}
+      {{#if nextUrl}}
+        <li class="page-item">
+          <a class="page-link" href="{{nextUrl}}" aria-label="Next">
+            <span aria-hidden="true">
+              &rsaquo;
+            </span>
+          </a>
+        </li>
+      {{else}}
+        <li class="page-item disabled">
+          <a class="page-link" href="#">
+            <span tabindex="-1" aria-disabled="true" aria-hidden="true">
+              &rsaquo;
+            </span>
+          </a>
+        </li>
+      {{/if}}
+      {{#if lastUrl}}
+        <li class="page-item">
+          <a class="page-link" href="{{lastUrl}}" aria-label="Last">
+            <span aria-hidden="true">
+              &raquo;
+            </span>
+          </a>
+        </li>
+      {{else}}
+        <li class="page-item disabled">
+          <a class="page-link" href="#">
+            <span tabindex="-1" aria-disabled="true" aria-hidden="true">
+              &raquo;
+            </span>
+          </a>
+        </li>
+      {{/if}}
+    </ul>
+  </nav>
+{{/if}}

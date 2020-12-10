@@ -1,0 +1,26 @@
+<main class="container mt-5">
+  <h1>Edit Review</h1>
+  <form id="edit-review-form" action="/api/review/{{review.review_id}}" method="PUT">
+    <div class="form-group">
+      <input type="hidden" class="form-control" name="review_id" id="review_id" value="{{review.review_id}}">
+    </div>
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" name="title" id="title" value="{{review.title}}">
+      <div id="review_title_error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="review_text">Review Text</label>
+      <textarea id="review_text" class="form-control" name="review_text" rows="4"
+        cols="50">{{review.review_text}}</textarea>
+      <div id="state-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+    <div class="form-group">
+      <output class="text-danger"></output>
+    </div>
+  </form>
+
+</main>

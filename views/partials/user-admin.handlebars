@@ -1,0 +1,41 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">username</th>
+      <th scope="col">email</th>
+      <th scope="col">role</th>
+      <th scope="col">view</th>
+      <th scope="col">edit</th>
+      <th scope="col">delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each users}}
+    <tr class="table-row">
+      <td>{{username}}</td>
+      <td>{{email}}</td>
+      <td class="text-center">{{role}}</td>
+      <td class="text-center"><a href="/user/{{_id}}" id="btnEditPlace" class="btn-sm btn-info small-btn-text"><i
+            class="fas fa-eye"></i>View User</a></td>
+      {{!-- VIEW USER BUTTON --}}
+      {{!-- <td class="text-center">
+        <button class="view-user-button-for-modal btn btn-info" data-toggle="modal" data-target="#view_user"
+          data-id="{{_id}}" data-verified={{is_email_verified}} data-first="{{first_name}}" data-last="{{last_name}}" data-username="{{username}}" data-email="{{email}}"
+          data-role={{role}} data-city="{{city}}" data-state="{{state}}" data-country="{{country}}"
+          data-registration="{{registration_time}}" data-lastLogin="{{last_login_time}}">
+          <i class="fas fa-eye"></i>View User</button></td> --}}
+
+      {{!-- EDIT USER BUTTON --}}
+      <td class="text-center">
+        <button class="edit-user-button-for-modal btn btn-primary" data-toggle="modal" data-target="#edit_user"
+          data-id="{{_id}}" data-first="{{first_name}}" data-last="{{last_name}}" data-username="{{username}}"
+          data-role={{role}} data-city="{{city}}" data-state="{{state}}" data-country="{{country}}">
+          <i class="fas fa-edit"></i>Edit User</button></td>
+      {{!-- DELETE USER BUTTON --}}
+      <td class="text-center"><button class="delete-user-from-list btn-sm btn-danger small-btn-text" data-id="{{_id}}"
+          data-email="{{email}}"><i class="fas fa-trash"></i>Delete
+          User</button></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

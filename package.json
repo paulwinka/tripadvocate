@@ -1,0 +1,47 @@
+{
+  "name": "travelwebsite",
+  "version": "1.0.0",
+  "description": "kind of like trip advisor only more basic",
+  "main": "server.js",
+  "scripts": {
+    "nodemon": "nodemon -r dotenv/config server.js"
+  },
+  "author": "Paul Winka",
+  "license": "MIT",
+  "dependencies": {
+    "@popperjs/core": "^2.5.3",
+    "@sendgrid/mail": "^7.3.0",
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "bootbox": "^5.4.1",
+    "bootstrap": "^4.5.2",
+    "bootswatch": "^4.5.2",
+    "config": "^3.3.2",
+    "cookie-parser": "^1.4.5",
+    "debug": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.1.0",
+    "gridfs-stream": "^1.1.1",
+    "joi": "^17.2.1",
+    "joi-objectid": "^3.0.1",
+    "jquery": "^3.5.1",
+    "jquery-ui": "^1.12.1",
+    "jquery-ui-dist": "^1.12.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.6",
+    "lodash": "^4.17.20",
+    "moment": "^2.29.1",
+    "mongodb": "^3.6.3",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "multer-gridfs-storage": "^4.2.0",
+    "mysql": "^2.18.1",
+    "oboe": "^2.1.5",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.10.0"
+  }
+}

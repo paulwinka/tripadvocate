@@ -1,0 +1,26 @@
+<main class="container mt-5">
+  <h1 class="h3">adding review as username "{{auth.username}}" for "{{place.title}}"...</h1>
+  <form id="add-review-form" action="/api/review/" method="POST">
+    {{!-- <div class="form-group">
+      <input type="hidden" class="form-control" name="user_id" id="user_id" value="{{auth.user_id}}">
+    </div> --}}
+    <div class="form-group">
+      <label for="place_id">Place ID</label>
+      <input type="text" class="form-control" name="place_id" id="place_id" value="{{place.place_id}}">
+    </div>
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" name="title" id="title">
+    </div>
+    <div class="form-group">
+      <label for="review_text">Review Text</label>
+      <textarea id="review_text" class="form-control" name="review_text" rows="4" cols="50"></textarea>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+    <div class="form-group">
+      <output class="text-danger"></output>
+    </div>
+  </form>
+</main>

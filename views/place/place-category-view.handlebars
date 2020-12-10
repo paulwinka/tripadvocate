@@ -1,0 +1,26 @@
+{{!-- {{#each results}}
+{{title}}
+hi
+{{/each}} --}}
+
+<main class="container mt-5">
+  <div class="row">
+
+    {{#each results}}
+    <div class="col-lg-6">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h2 class="card-title h2">
+            <a href="/place/{{place_id}}">{{title}}</a>
+          </h2>
+          <h3>{{city}}, {{state}} {{country}}</h3>
+          <div><span class="badge badge-primary">{{category}}</span></div>
+          <div class="text-center">
+            <img class="card-img-top gallery" src="{{image}}" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</main>

@@ -1,0 +1,97 @@
+<main class="container mt-5">
+  <h1>Edit Place</h1>
+  {{!-- <form id="edit-place-form" action="/api/place/{{place.place_id}}" method="POST">
+  <input type="text" name="place_id" id="place_id" value="{{place.place_id}}">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" name="title" id="title" value="{{place.title}}">
+      <div id="title-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="category">Category</label>
+      <input type="text" class="form-control" name="category" id="category" value="{{place.category}}">
+      <div id="category-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="city">City</label>
+      <input type="text" class="form-control" name="city" id="city" value="{{place.city}}">
+      <div id="city-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="state">State</label>
+      <input type="text" class="form-control" name="state" id="state" value="{{place.state}}">
+      <div id="state-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="country">Country</label>
+      <input type="text" class="form-control" name="country" id="country" value="{{place.country}}">
+      <div id="country-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="image">Image</label>
+      <input type="text" class="form-control" name="image" id="image" value="{{place.image}}">
+      <div id="image-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+    <div class="form-group">
+      <output class="text-danger"></output>
+    </div>
+  </form> --}}
+
+  <form id="add-place-form-modal" enctype="multipart/form-data" action="/api/place" method="POST"
+    class="form needs-validation mt-3" novalidate>
+    <input type="text" value="{{place._id}}">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" name="name" id="name" value="{{place.name}}">
+      <div id="title-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="category">Category</label>
+      <input type="text" class="form-control" name="category" id="category" value="{{place.category}}">
+      <div id="category-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="city">City</label>
+      <input type="text" class="form-control" name="city" id="city" value={{place.city}}>
+      <div id="city-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="state">State</label>
+      <input type="text" class="form-control" name="state" id="state" value="{{place.state}}">
+      <div id="state-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="country">Country</label>
+      <input type="text" class="form-control" name="country" id="country" value="{{place.country}}">
+      <div id="country-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="uploaded_file">Image</label>
+      <input type="file" class="form-control-file" name="uploaded_file" id="uploaded_file">
+    </div>
+    <div class="form-group" id="image_preview">
+      <label for="image_preview">Image Preview</label>
+      <img width="200px" height="auto" id="pet_image" alt="your image" src="/uploads/{{place.image.filename}}" />
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea required type="text" class="form-control" name="description" id="description" rows="3"
+        cols="50">{{place.description}}</textarea>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Save</button>
+      <a href="/place/admin" class="btn btn-secondary"><i class="fas fa-ban"></i> Cancel</a>
+      <input class="btn btn-secondary" type="reset" value="Reset">
+    </div>
+    <div class="form-group">
+      <output id="mainError" style="white-space: pre-wrap" class="text-danger">{{catchError}}</output>
+    </div>
+  </form>
+
+
+
+
+</main>

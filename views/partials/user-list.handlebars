@@ -1,0 +1,27 @@
+{{#if users}}
+{{> pager pager}}
+<div class="row">
+  {{#each users}}
+  <div class="col-lg-6">
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="card-title h2">
+          <a href="/user/{{user_id}}">{{first_name}} {{last_name}}</a>
+        </h2>
+        <h3>{{email}}</h3>
+        <h3>{{city}}, {{state}} {{country}}</h3>
+        <div>
+          <a href="/user/edit/{{user_id}}" class="btn btn-primary">Edit</a>
+          <button class="btn btn-danger delete-user-from-list" data-id="{{user_id}}" data-title="">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+{{> pager pager}}
+{{else}}
+<div>
+  There are no users.
+</div>
+{{/if}}

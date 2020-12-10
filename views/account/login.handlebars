@@ -1,0 +1,21 @@
+<div class="col-12 col-lg-8 mt-5">
+  <fieldset>
+    <form id="login-form" method="POST" class="form needs-validation" novalidate>
+      <legend>Login Account</legend>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input id="username" name="username" class="form-control" type="text" value="{{username}}" required>
+        <div class="invalid-feedback"> Please enter your username.</div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" name="password" class="form-control" type="password" value="{{password}}" required>
+        <div class="invalid-feedback"> Please enter your password.</div>
+      </div>
+      <div class="form-group"><button class="btn btn-primary">Login</button></div>
+      <div class="form-group"> <output class="text-danger">{{error}}</output></div>
+    </form>
+  </fieldset>
+  <div class="mt-5">Don't have an account? Register <a href="/account/register">here</a>.</div>
+  <div class="mt-5">Forget password? Reset it <a href="/account/reset_password">here</a>.</div>
+</div>

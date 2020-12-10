@@ -1,0 +1,162 @@
+<main class="container mt-5">
+
+  {{!-- <div id="message">This is my modal</div> --}}
+  <div class="modal fade" tabindex="-1" role="dialog" id="add-place-photo">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Place</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="add-place-form-modal" action="/api/place" method="POST">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" name="name" id="name">
+              <div id="title-error" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+              <label for="category">Category</label>
+              <input type="text" class="form-control" name="category" id="category">
+              <div id="category-error" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" class="form-control" name="city" id="city">
+              <div id="city-error" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+              <label for="state">State</label>
+              <input type="text" class="form-control" name="state" id="state">
+              <div id="state-error" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input type="text" class="form-control" name="country" id="country">
+              <div id="country-error" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+              <label for="image">Image</label>
+              <input type="text" class="form-control" name="image" id="image">
+              <div id="image-error" class="text-danger"></div>
+            </div>
+            <div class="file-field input-field">
+              <div class="btn">
+                <span>File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input type="text" class="file-path-wrapper">
+              </div>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary" type="submit">Add Place</button>
+            </div>
+            <div class="form-group">
+              <output class="text-danger"></output>
+            </div>
+          </form>
+        </div>
+        {{!-- <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div> --}}
+      </div>
+    </div>
+  </div>
+
+  {{!-- <div id="message">This is my modal</div> --}}
+  <div class="modal fade" tabindex="-1" role="dialog" id="message">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Place</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!--  SINGLE FILE -->
+          <form action="/upload/photo" enctype="multipart/form-data" method="POST">
+            <input type="file" name="myImage" accept="image/*" />
+            <input type="submit" value="Upload Photo" />
+          </form>
+        </div>
+        {{!-- <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div> --}}
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="row">
+    <div class="col-md-8">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Places</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{place.title}}</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-img-top text-center">
+          <img class="card-img-top img-fluid gallery" src="/images/{{place.image.filename}}" alt="">
+          <div class="card-body text-center">
+            <h2 class="card-title text-left"> {{place.title}} </h2>
+            <h3 class="text-left">{{place.city}}, {{place.state}}, {{place.country}}</h3>
+            <div class="mb-3 text-left">Category: {{place.category}}</div>
+            <div class="text-left">
+              <a href="/place/add" class="btn btn-primary">Add Place</a>
+              <a href="/place/edit/{{place.place_id}}" class="btn btn-primary">Edit Place</a>
+              <button id="delete-place-from-view" class="btn btn-danger" data-id="{{place.place_id}}"
+                data-title="{{place.title}}">Delete Place</a></button>
+              <a href="/review/add/{{place.place_id}}" id="add-review-from-place-view" class="btn btn-info"
+                data-id="{{place.place_id}}" data-title="{{place.title}}">Review This Place</a>
+              {{!-- <a href="/review/add" class="btn btn-info">Review This Place</a> --}}
+              <button id="add-place-photo-button-for-modal" class="btn btn-info" data-toggle="modal"
+                data-target="#add-place-photo">Add photo!</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    {{#if placeReviews}}
+    <div class="col-md-4">
+      <h2>Reviews</h2>
+      {{#each placeReviews}}
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">"{{review_title}}"</div>
+          <div class="card-subtitle">By: {{first_name}} {{last_name}}</div>
+          <div class="card-text mt-1">
+            {{review_text}}
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{else}}
+  There are no review yet.
+  {{/if}}
+</main>

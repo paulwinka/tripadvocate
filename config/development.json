@@ -1,0 +1,13 @@
+{
+  "auth": {
+    "saltRounds": 10,
+    "secret": "mySecret"
+  },
+  "sendgrid": {
+    "apiKey": "",
+    "from": "paul_winka@insideranken.org",
+    "to": "",
+    "secret": "emailSecret",
+    "templates": {}
+  }
+}

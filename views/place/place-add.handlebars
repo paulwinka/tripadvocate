@@ -1,0 +1,42 @@
+<main class="container mt-5">
+  <h1>Add Place</h1>
+  <form id="add-place-form" action="/api/place" method="POST">
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" class="form-control" name="title" id="name">
+    <div id="title-error" class="text-danger"></div>
+  </div>
+  <div class="form-group">
+    <label for="category">Category</label>
+    <input type="text" class="form-control" name="category" id="category">
+    <div id="category-error" class="text-danger"></div>
+  </div>
+  <div class="form-group">
+    <label for="city">City</label>
+    <input type="text" class="form-control" name="city" id="city">
+    <div id="city-error" class="text-danger"></div>
+  </div>
+  <div class="form-group">
+    <label for="state">State</label>
+    <input type="text" class="form-control" name="state" id="state">
+    <div id="state-error" class="text-danger"></div>
+  </div>
+  <div class="form-group">
+    <label for="country">Country</label>
+    <input type="text" class="form-control" name="country" id="country">
+    <div id="country-error" class="text-danger"></div>
+  </div>
+  <div class="form-group">
+    <label for="image">Image</label>
+    <input type="text" class="form-control" name="image" id="image">
+    <div id="image-error" class="text-danger"></div>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-primary" type="submit">Add Place</button>
+  </div>
+  <div class="form-group">
+    <output class="text-danger"></output>
+  </div>
+  </form>
+
+</main>

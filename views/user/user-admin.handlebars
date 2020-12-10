@@ -1,0 +1,121 @@
+<div class="row">
+  <div class="col-md-8">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/Admin">Admin Main</a></li>
+        <li class="breadcrumb-item active">Administrate Users</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="col-12 col-lg-12 card my-2 my-lg-3">
+  {{!-- <img src="images/emoji1_mod.jpg" alt="" class="card-img-top"> --}}
+  <form id="search-user-form" method="GET">
+    <fieldset>
+      {{!-- SEARCH BAR --}}
+      <legend>Search</legend>
+      <div class="form-group">
+        <label for="search" class="sr-only">
+          Search
+        </label>
+        <div class="input-group mb-3">
+          <input id="search" name="search" type="search" class="form-control" placeholder="search..."
+            value="{{search}}" />
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+      {{!-- DROP DOWN --}}
+      {{!-- <div class="form-group">
+        <label for="type" class="">
+          Sort by &uarr; or &darr; :
+        </label>
+        <select id="sorter-drop" name="sorter" class="custom-select w-auto">
+          {{> select-option-list sorterOptionList}}
+        </select> --}}
+
+    </fieldset>
+  </form>
+
+
+  <div id="searchResults">
+    {{> user-admin this}}
+  </div>
+
+
+</div>
+</div>
+
+
+{{!-- EDIT MODAL --}}
+<div class="modal fade" tabindex="-1" role="dialog" id="edit_user">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="edit-user-form-modal" id="edit-user-form-modal" action="/api/user/{{_id}}" method="PUT"
+          data-id="{{id}}">
+          <input type="hidden" name="_id" id="_id">
+          <div class="form-group">
+            <label for="first_name">first name</label>
+            <input type="text" class="form-control" name="first_name" id="first_name">
+            <div id="first-name-error" class="text-danger"></div>
+          </div>
+          <div class="form-group">
+            <label for="last_name">last name</label>
+            <input type="text" class="form-control" name="last_name" id="last_name">
+            <div id="last-name-error" class="text-danger"></div>
+          </div>
+          <div class="form-group">
+            <label for="username">username</label>
+            <input type="text" class="form-control" name="username" id="username">
+            <div id="username-error" class="text-danger"></div>
+          </div>
+          <div class="form-group">
+            <label for="role">Role</label>
+            <select name="role" id="role">
+              {{#if (eq userToEdit.role 'admin')}}
+              <option selected="admin">admin</option>
+              <option value="member">member</option>
+              {{else}}
+              <option selected="member">member</option>
+              <option value="admin">admin</option>
+              {{/if}}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="city">city</label>
+            <input type="text" class="form-control" name="city" id="city">
+            <div id="city-error" class="text-danger"></div>
+          </div>
+          <div class="form-group">
+            <label for="state">state</label>
+            <input type="text" class="form-control" name="state" id="state">
+            <div id="state-error" class="text-danger"></div>
+          </div>
+          <div class="form-group">
+            <label for="country">country</label>
+            <input type="text" class="form-control" name="country" id="country">
+            <div id="country-error" class="text-danger"></div>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary" type="submit" data-id="{{emoji_id}}"><i class="fas fa-save"></i> Save User
+            </button>
+          </div>
+          <div class=" form-group">
+            <output class="text-danger"></output>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

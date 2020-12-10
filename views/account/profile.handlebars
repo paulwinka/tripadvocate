@@ -1,0 +1,38 @@
+<main class="container mt-5">
+  <h1 class="mt-5">My profile, places, and reviews</h1>
+  <h2 class="mt-5">My User Information:</h2>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div>Username: {{user.username}}</div>
+          <div>Email: {{user.email}}</div>
+          <div>From: {{user.city}}, {{user.state}}, {{user.country}} </div>
+          <div>Last login: {{formatDatetime user.last_login_time}} </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <h2 class="mt-5">My Reviews:</h2>
+  {{#if profileItems}}
+  <div class="row">
+    {{#each profileItems}}
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title"><a href="/review/{{review_id}}/auth">"{{review_title}}"</a></div>
+          <div>Place: {{place_title}}</div>
+          <div>Location: {{place_city}}, {{place_state}}, {{place_country}}</div>
+          <div class="card-text">
+            {{review_text}}
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{else}}
+  {{/if}}
+</main>
