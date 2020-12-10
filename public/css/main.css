@@ -43,11 +43,11 @@ legend {
   background-color: black;
 }
 
-.card-img-top {
+/* .card-img-top {
   width: 100%;
   height: 15vw;
   object-fit: cover;
-}
+} */
 
 .thumbnail {
   border: 1px solid #ddd;
@@ -59,4 +59,28 @@ legend {
 
 .rounding-edge {
   border-radius: 5%;
+}
+
+@media only screen and (min-width: 600px) {
+  .card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+  }
 }
