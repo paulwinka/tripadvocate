@@ -1,4 +1,3 @@
-//initialize environment variables.
 require('dotenv').config();
 
 //libraries ("require" )
