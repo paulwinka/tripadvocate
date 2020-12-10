@@ -43,11 +43,17 @@ legend {
   background-color: black;
 }
 
-/* .card-img-top {
+.card-img-top {
   width: 100%;
   height: 15vw;
   object-fit: cover;
-} */
+}
+
+.card-img-top-view {
+  width: 100%;
+  height: 25vw;
+  object-fit: cover;
+}
 
 .thumbnail {
   border: 1px solid #ddd;
