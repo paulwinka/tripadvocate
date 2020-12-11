@@ -22,24 +22,40 @@ const getAllUsers = async () => {
   return database.collection('user').find({}).toArray();
 };
 
-const upsertPlace = async (place) => {
+const upsertReview = async (review) => {
   const database = await connect();
-  return database.collection('place').findOneAndUpdate(
-    { _id: new ObjectID(place._id) },
-    // { _id: place._id },
+  return database.collection('review').updateOne(
+    { place_id: new ObjectID(review.place_id), user_id: new ObjectID(review.user_id) },
     {
+      $setOnInsert: {
+        place_id: new ObjectID(review.place_id),
+        user_id: new ObjectID(review.user_id),
+      },
       $set: {
-        name: place.name,
-        category: place.category,
-        city: place.city,
-        state: place.state,
-        country: place.country,
-        description: place.description,
-        image: { filename: place.image, mime: 'image/jpeg' },
+        title: review.title,
+        description: review.description,
       },
     },
-    { upsert: true, returnOriginal: true }
+    { upsert: true }
   );
+};
+
+const upsertPlace = async (place) => {
+  const update = {
+    $set: {
+      name: place.name,
+      category: place.category,
+      city: place.city,
+      state: place.state,
+      country: place.country,
+      description: place.description,
+    },
+  };
+  if (place.image) {
+    update.$set.image = place.image;
+  }
+  const database = await connect();
+  return database.collection('place').updateOne({ _id: new ObjectID(place._id) }, update, { upsert: true });
 };
 
 const getUserByUsername = async (username) => {
@@ -228,6 +244,7 @@ module.exports = {
   updatePasswordHash,
   upsertPlace,
   deletePlace,
+  upsertReview,
   // getUserProfileData,
 };
 

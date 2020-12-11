@@ -30,20 +30,13 @@ router.use(express.json());
 
 router.get('/', auth, async (req, res, next) => {
   try {
-    // navbar showing highlights & current user;
     const auth = req.user;
     const active = {};
     active.places = true;
 
-    // getting data
-    // const q = req.query.q;
-    const category = req.query.category;
-    const sortBy = req.query.sortBy;
-    const pageSize = parseInt(req.query.pageSize) || 10;
-    const pageNumber = parseInt(req.query.page) || 1;
 
     const categoryOptionList = {
-      selected: category || '',
+      selected: '',
       options: [
         { value: '', text: 'All Categories' },
         { value: 'hotel', text: 'Hotels' },
@@ -53,7 +46,7 @@ router.get('/', auth, async (req, res, next) => {
     };
 
     const sortingOptionList = {
-      selected: sortBy || '',
+      selected: '',
       options: [
         { value: '', text: 'relevance' },
         { value: 'name', text: 'name' },
@@ -61,35 +54,20 @@ router.get('/', auth, async (req, res, next) => {
         { value: 'category', text: 'category' },
       ],
     };
-    const connection = await db.connect();
-    const conditions = {};
-    if (category) {
-      conditions.category = category;
-    }
-    const matchStage = {};
-    // if (q) {
-    //   matchStage.$text = { $search: q };
-    // }
-    const cursor = connection.collection('place').find(conditions);
-
-    //page stuff would go here;
-    const places = await cursor.toArray();
 
     res.render('place/place-list', {
       title: 'Home Page: Places to see',
-      places,
       active,
-      category,
       categoryOptionList,
       sortingOptionList,
       user: auth,
-      // q,
-      active: { places: true },
     });
   } catch (err) {
     next(err);
   }
 });
+
+
 router.get('/admin', auth, admin, async (req, res, next) => {
   try {
     // navbar showing highlights & current user;

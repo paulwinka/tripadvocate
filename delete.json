@@ -1,0 +1,22 @@
+[
+  {
+    "_id": "5fd27fd9647f7bb815c4c946",
+    "place_id": "5fbc37c4fc13ae680b00002b",
+    "user_id": "5fbc10ecfc13ae232d000068",
+    "title": "Black Forest -- unforgettable!",
+    "description": "The forest was great.",
+    "score": 5,
+    "place": [
+      {
+        "_id": "5fbc37c4fc13ae680b00002b",
+        "name": "Black Forest (Schwarzwald)",
+        "category": "activity",
+        "city": "Freiburg",
+        "country": "Germany",
+        "description": "The Black Forest (German: Schwarzwald [ˈʃvaʁtsvalt] (About this soundlisten)) is a large forested mountain range in the state of Baden-Württemberg in southwest Germany. It is bounded by the Rhine valley to the west and south. Its highest peak is the Feldberg with an elevation of 1,493 metres (4,898 ft) above sea level. The region is roughly oblong in shape, with a length of 160 kilometres (100 miles) and breadth of up to 50 km (30 mi).[1]",
+        "image": { "filename": "1607629020164_black_forest.jpg", "mime": "image/jpeg" },
+        "state": ""
+      }
+    ]
+  }
+]

@@ -11,7 +11,7 @@
           Search
         </label>
         <div class="input-group mb-3">
-          <input id="search" name="search" type="search" class="form-control" placeholder="search..."
+          <input id="reviewSearch" name="q" type="search" class="form-control" placeholder="search..."
             value="{{search}}" />
           <div class="input-group-append">
             <button type="submit" class="btn btn-primary">
@@ -30,7 +30,21 @@
       </div>
     </fieldset>
   </form>
-  <div id="searchResults">
-    {{> review-list this}}
+
+
+
+
+  
+  <div class="d-flex align-items-center">
+    <span id="stream-data-spinner" class="spinner-border m-2"></span>
+    <span id="stream-data-seen" class="m-2" style="font-weight: 900;">
+      Loading...
+    </span>
+  </div>
+  <div id="stream-data" class="d-flex flex-wrap"></div>
+  <div id="search-results" class="d-flex flex-wrap">
   </div>
 </main>
+
+<script src="/js/oboe-browser.min.js"></script>
+<script defer src="/js/oboe-review.js"></script>

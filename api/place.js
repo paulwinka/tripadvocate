@@ -25,32 +25,6 @@ const sendError = (err, res) => {
     res.json({ error: err.message });
   }
 };
-// POST THAT ADDS PLACE INCLUDING UPLOADING PHOTO.
-router.post('/', auth, admin, uploadImg().single('uploaded_file'), async (req, res, next) => {
-  debug(`insert place ${JSON.stringify(req.body)}`);
-  try {
-    const schema = Joi.object({
-      _id: Joi.string().allow(''),
-      name: Joi.string().required(),
-      category: Joi.string().required(),
-      city: Joi.string().required(),
-      state: Joi.string().allow('').min(2),
-      country: Joi.string().required(),
-      description: Joi.string().allow('').min(10),
-      image: Joi.string(),
-    });
-
-    const place = await schema.validateAsync(req.body, { abortEarly: false });
-    if (req.file) {
-      place.image = req.file.filename;
-    }
-    debug(req.file);
-    const result = await db.upsertPlace(place);
-    res.json(result);
-  } catch (err) {
-    sendError(err, res);
-  }
-});
 
 // GET ALL, THE BIG QUERY, GOES AT THE TOP.
 router.get('/', auth, async (req, res, next) => {
@@ -89,6 +63,7 @@ router.get('/', auth, async (req, res, next) => {
     }
     const pipeline = [
       { $match: matchStage },
+
       {
         $project: {
           name: 1,
@@ -117,14 +92,35 @@ router.get('/', auth, async (req, res, next) => {
       res.write(',\n');
     }
     res.end('null]');
-
-    // const q = req.query.q;
-    // debug(q);
-
-    // res.json(places);
   } catch (err) {
     debug(err.stack);
     // sendError(err, res);
+  }
+});
+// POST THAT ADDS PLACE INCLUDING UPLOADING PHOTO.
+router.post('/', auth, admin, uploadImg().single('uploaded_file'), async (req, res, next) => {
+  debug(`insert place ${JSON.stringify(req.body)}`);
+  try {
+    const schema = Joi.object({
+      _id: Joi.string().allow(''),
+      name: Joi.string().required(),
+      category: Joi.string().required(),
+      city: Joi.string().required(),
+      state: Joi.string().allow('').min(2),
+      country: Joi.string().required(),
+      description: Joi.string().allow('').min(10),
+      image: Joi.object({ filename: Joi.string().required(), mimetype: Joi.string().required() }),
+    });
+
+    const place = await schema.validateAsync(req.body, { abortEarly: false });
+    if (req.file) {
+      place.image = { filename: req.file.filename, mime: req.file.mimetype };
+    }
+    debug(req.file);
+    const result = await db.upsertPlace(place);
+    res.json(result);
+  } catch (err) {
+    sendError(err, res);
   }
 });
 

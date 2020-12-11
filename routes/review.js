@@ -13,35 +13,15 @@ const router = express.Router();
 // VIEW ALL REVIEWS
 router.get('/', async (req, res, next) => {
   try {
-    const search = req.query.search;
-    const pageSize = parseInt(req.query.pageSize) || 10;
-    const pageNumber = parseInt(req.query.page) || 1;
+    const auth = req.user;
+    const active = {};
+    active.reviews = true;
 
-    let query = db.getAllReviews();
-
-    if (search) {
-      // query = query.whereRaw('MATCH (review.title, review.review_text) AGAINST (? IN NATURAL LANGUAGE MODE)', [search]);
-      query = query.whereRaw('review.title LIKE ? OR review_text LIKE ?', ['%' + search + '%', '%' + search + '%']);
-    } else {
-      query = query.orderBy('review.title');
-    }
-    const pager = await pagerUtils.getPager(query, pageSize, pageNumber, req.originalUrl);
-    const reviews = await query.limit(pageSize).offset(pageSize * (pageNumber - 1));
-
-    if (!req.xhr) {
-      res.render('review/review-list', {
-        title: 'Home Page: reviews to see',
-        reviews,
-        search,
-        pager,
-      });
-    } else {
-      res.render('review/search-results', {
-        reviews,
-        pager,
-        layout: null,
-      });
-    }
+    res.render('review/review-list', {
+      title: 'Home Page: reviews to see',
+      user: auth,
+      active,
+    });
   } catch (err) {
     next(err);
   }

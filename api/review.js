@@ -21,10 +21,44 @@ const sendError = (err, res) => {
 
 // GET ALL
 router.get('/', async (req, res, next) => {
-  debug('get all');
+  debug('get all reviews api');
   try {
-    const reviews = await db.getAllReviews();
-    res.json(reviews);
+    const q = req.query.q;
+    const collation = { locale: 'en_US', strength: 1 };
+
+    const matchStage = {};
+    if (q) {
+      matchStage.$text = { $search: q };
+    }
+    const pipeline = [
+      {
+        $match: matchStage,
+      },
+      {
+        $lookup: {
+          from: 'place',
+          localField: 'place_id',
+          foreignField: '_id',
+          as: 'place',
+        },
+      },
+      {
+        $unwind: '$place',
+      },
+    ];
+    const connection = await db.connect();
+    const cursor = connection.collection('review').aggregate(pipeline, { collation: collation });
+    // debug(cursor.toArray());
+
+    // write the JSON file
+    res.type('application/json');
+    res.write('[\n');
+    for await (const doc of cursor) {
+      res.write(JSON.stringify(doc));
+      debug(JSON.stringify(doc));
+      res.write(',\n');
+    }
+    res.end('null]');
   } catch (err) {
     sendError(err, res);
   }
@@ -42,7 +76,6 @@ router.get('/:id', async (req, res, next) => {
     next(err);
   }
 });
-
 
 // POST
 router.post('/', async (req, res, next) => {
