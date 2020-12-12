@@ -116,6 +116,27 @@ $(() => {
   //     });
   // });
   // NEW ADD PLACE FORM MODAL HERE
+  $('#add-review-form').on('submit', (evt) => {
+    evt.preventDefault();
+    const id = $('#place_id').val();
+    const formData = $('#add-review-form').serialize();
+    $.ajax({
+      method: 'POST',
+      url: `/api/review/${id}/add`,
+      data: formData,
+    })
+      .done((res) => {
+        if (res.error) {
+          $('#add-review-form output').html(res.error);
+        } else {
+          window.location = new URL(`/place/${id}`, window.location.href);
+        }
+      })
+      .fail((xhr, textStatus, err) => {
+        $('#edit-review-form output').html(`${textStatus}\n{err}`);
+      });
+  });
+
   $('#add-place-form-modal').on('submit', (evt) => {
     evt.preventDefault();
     const form = $('form')[0];
@@ -447,24 +468,24 @@ $(() => {
       });
   });
 
-  $('#add-review-form').on('submit', (evt) => {
-    evt.preventDefault();
-    const formData = $(evt.target).serialize();
-    $.ajax({
-      method: 'POST',
-      url: `/api/review`,
-      dataType: 'json',
-      data: formData,
-    })
-      .done((res) => {
-        window.location = new URL(`/review/${res[0]}`, window.location.href);
-      })
-      .fail((xhr, textStatus, err) => {
-        alert('fail');
-        alert(xhr.responseText);
-        $('#add-review-form output').html(`${textStatus}\n{err}`);
-      });
-  });
+  // $('#add-review-form').on('submit', (evt) => {
+  //   evt.preventDefault();
+  //   const formData = $(evt.target).serialize();
+  //   $.ajax({
+  //     method: 'POST',
+  //     url: `/api/review`,
+  //     dataType: 'json',
+  //     data: formData,
+  //   })
+  //     .done((res) => {
+  //       window.location = new URL(`/review/${res[0]}`, window.location.href);
+  //     })
+  //     .fail((xhr, textStatus, err) => {
+  //       alert('fail');
+  //       alert(xhr.responseText);
+  //       $('#add-review-form output').html(`${textStatus}\n{err}`);
+  //     });
+  // });
 
   $('#add-user-form').on('submit', (evt) => {
     evt.preventDefault();

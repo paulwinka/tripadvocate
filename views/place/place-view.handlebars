@@ -8,6 +8,9 @@
         </ol>
       </nav>
     </div>
+    <div class="col-md-6 d-flex flex-row justify-content-end align-items-center">
+      <a href="/review/add/{{place._id}}" id="add-review-button" class="btn btn-primary"><i class="fas fa-book-open"></i> Add Review</a>
+    </div>
   </div>
 
 
@@ -48,13 +51,13 @@
           <div class="card-subtitle">By: {{#each reviewing_user}}{{username}} {{/each}}</div>
           <div class="card-subtitle">Score: ({{score}})
             <span style="color:yellow">{{#if (eq score 1)}} <i class="fas fa-star"></i>{{/if}}
-            {{#if (eq score 2)}} <i class="fas fa-star"></i><i class="fas fa-star"></i>{{/if}}
-            {{#if (eq score 3)}} <i class="fas fa-star"></i><i class="fas fa-star"></i><i
-            class="fas fa-star"></i>{{/if}}
-            {{#if (eq score 4)}} <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-            class="fas fa-star"></i>{{/if}}
-            {{#if (eq score 5)}} <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-            class="fas fa-star"></i><i class="fas fa-star"></i>{{/if}}</span>
+              {{#if (eq score 2)}} <i class="fas fa-star"></i><i class="fas fa-star"></i>{{/if}}
+              {{#if (eq score 3)}} <i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                class="fas fa-star"></i>{{/if}}
+              {{#if (eq score 4)}} <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                class="fas fa-star"></i>{{/if}}
+              {{#if (eq score 5)}} <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                class="fas fa-star"></i><i class="fas fa-star"></i>{{/if}}</span>
           </div>
           <div class="card-text mt-1">
             {{description}}
@@ -66,7 +69,15 @@
     </div>
   </div>
   {{else}}
-  There are no review yet.
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-text">
+          There are no reviews yet.
+        </div>
+      </div>
+    </div>
+  </div>
   {{/if}}
 
 

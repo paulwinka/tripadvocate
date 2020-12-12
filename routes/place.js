@@ -71,7 +71,7 @@ router.get('/admin', auth, admin, async (req, res, next) => {
     // navbar showing highlights & current user;
     const auth = req.user;
     const active = {};
-    active.places = true;
+    active.admin = true;
 
     // getting data
     // const q = req.query.q;
@@ -122,7 +122,6 @@ router.get('/admin', auth, admin, async (req, res, next) => {
       sortingOptionList,
       user: auth,
       // q,
-      active: { places: true },
     });
   } catch (err) {
     next(err);
@@ -157,7 +156,7 @@ router.get('/:place_id', auth, async (req, res, next) => {
     const place = await db.findPlaceById(place_id);
     debug(place);
     const reviews = await db.getReviewsForPlace(place_id);
-    debug(reviews[0].reviewing_user[0].last_name);
+    // debug(reviews[0].reviewing_user[0].last_name);
 
     // const placeReviews = await db.getAllReviewsPlacesUsers(place_id);
     if (place) {

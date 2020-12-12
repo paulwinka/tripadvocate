@@ -55,6 +55,7 @@ const upsertReview = async (review) => {
       },
       $set: {
         title: review.title,
+        score: review.score,
         description: review.description,
       },
     },

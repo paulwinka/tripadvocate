@@ -32,7 +32,7 @@ router.get('/', async (req, res, next) => {
     }
     const pipeline = [
       {
-        $match: {matchStage},
+        $match: { matchStage },
       },
       {
         $lookup: {
@@ -122,6 +122,28 @@ router.post('/:id', async (req, res, next) => {
     debug(review);
     review = await schema.validateAsync(review, { abortEarly: false });
     const updateReview = await db.updateReview(review);
+    res.json(updateReview);
+  } catch (err) {
+    sendError(err, res);
+  }
+});
+// ADD REVIEW
+router.post('/:id/add', auth, async (req, res, next) => {
+  // debug(`add review ${JSON.stringify(req.body)}`);
+  try {
+    const schema = Joi.object({
+      place_id: Joi.string().required(),
+      user_id: Joi.string().required(),
+      title: Joi.string().required(),
+      score: Joi.number().required(),
+      description: Joi.string().required(),
+    });
+    let review = req.body;
+    review.place_id = req.params.id;
+    review.user_id = req.user._id;
+    debug(review);
+    review = await schema.validateAsync(review, { abortEarly: false });
+    const updateReview = await db.upsertReview(review);
     res.json(updateReview);
   } catch (err) {
     sendError(err, res);

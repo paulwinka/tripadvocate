@@ -44,14 +44,19 @@ router.get('/admin', auth, admin, async (req, res, next) => {
 });
 
 // ADD REVIEW FORM
-router.get('/add', auth, (req, res, next) => {
-  res.render('review/review-add', { title: 'Add Review', auth: req.user });
-});
+// router.get('/add/:id', auth, (req, res, next) => {
+//   const id = req.params.id;
+//   res.render('review/review-add', { title: 'Add Review', auth: req.user });
+// });
 // ADD REVIEW FORM WITH PLACE ID
 router.get('/add/:place_id', auth, async (req, res, next) => {
+  const active = {};
+  active.places = true;
+  const auth = req.user;
   const place_id = req.params.place_id;
   const place = await db.findPlaceById(place_id);
-  res.render('review/review-add', { title: 'Add Review', auth: req.user, place });
+  debug(req.user);
+  res.render('review/review-add', { title: 'Add Review ' + place.name, user: auth, place, active });
 });
 
 // EDIT REVIEW FORM

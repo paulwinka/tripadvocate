@@ -44,11 +44,11 @@
               <a class="dropdown-item" href="/review/admin"><i class="fas fa-book-open"></i> Reviews</a>
             </div>
           </li>
-          <li class="nav-item"><a href="/account/logout" class="nav-link underLink">Logout</a></li>
+          <li class="nav-item"><a href="/account/logout" class="nav-link underLink"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
 
 
           {{else if (eq user.role 'member')}}
-          <li class="nav-item"><a href="/account/logout" class="nav-link underLink">Logout</a></li>
+          <li class="nav-item"><a href="/account/logout" class="nav-link underLink"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
 
           <li class="{{#if active.profile}}active{{/if}} nav-item"><a href="/account/me" class="nav-link underLink"><i class="fas fa-user"></i> My
               Profile</a></li>
@@ -64,6 +64,7 @@
 
 
           {{/if}}
+
 
 
 
