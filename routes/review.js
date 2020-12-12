@@ -31,7 +31,7 @@ router.get('/admin', auth, admin, async (req, res, next) => {
   try {
     const auth = req.user;
     const active = {};
-    active.reviews = true;
+    active.admin = true;
 
     res.render('review/review-list-admin', {
       title: 'Home Page: reviews to see',

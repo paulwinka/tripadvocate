@@ -23,6 +23,11 @@ const getAllUsers = async () => {
   return database.collection('user').find({}).toArray();
 };
 
+const getReviewsForPlace = async (place_id) => {
+  const database = await connect();
+  return database.collection('review').find({ place_id: new ObjectID(place_id) }).toArray();
+};
+
 const upsertReview = async (review) => {
   const database = await connect();
   return database.collection('review').updateOne(
@@ -66,7 +71,7 @@ const getUserByUsername = async (username) => {
 
 const getReviewById = async (_id) => {
   const database = await connect();
-  return database.collection('review').findOne({ _id: new ObjectID(_id)});
+  return database.collection('review').findOne({ _id: new ObjectID(_id) });
 };
 
 const getUserByEmail = async (email) => {
@@ -216,7 +221,6 @@ const updateReview = async (review) => {
   );
 };
 
-
 const deleteUser = async (user) => {
   const database = await connect();
   return database.collection('user').deleteOne({ _id: ObjectID(user._id) });
@@ -269,6 +273,7 @@ module.exports = {
   upsertReview,
   getReviewById,
   updateReview,
+  getReviewsForPlace,
   // getUserProfileData,
 };
 

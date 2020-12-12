@@ -38,16 +38,17 @@
 
 
   <div class="row mt-3">
-    {{#if placeReviews}}
+    {{#if reviews}}
     <div class="col-md-4">
       <h2>Reviews</h2>
-      {{#each placeReviews}}
+      {{#each reviews}}
       <div class="card">
         <div class="card-body">
-          <div class="card-title">"{{review_title}}"</div>
-          <div class="card-subtitle">By: {{first_name}} {{last_name}}</div>
+          <div class="card-title">"{{title}}"</div>
+          <div class="card-subtitle">By: {{user_id}} </div>
+          <div class="card-subtitle">Score: {{score}} </div>
           <div class="card-text mt-1">
-            {{review_text}}
+            {{description}}
           </div>
         </div>
       </div>

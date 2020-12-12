@@ -150,16 +150,19 @@ router.get('/add', auth, admin, (req, res, next) => res.render('place/place-add'
 router.get('/:place_id', auth, async (req, res, next) => {
   try {
     const auth = req.user;
+    
 
     const place_id = req.params.place_id;
+    debug(place_id);
     // debug(`find place by id, place_id =  ${place_id}`);
     const place = await db.findPlaceById(place_id);
-    const placeReviews = null;
+    const reviews = await db.getReviewsForPlace(place_id);
+    debug(reviews);
     // const placeReviews = await db.getAllReviewsPlacesUsers(place_id);
     if (place) {
       const active = {};
       active.places = true;
-      res.render('place/place-view', { title: place.title, place, placeReviews, active, user: auth });
+      res.render('place/place-view', { title: place.title, place, reviews, active, user: auth });
     } else {
       res.status(404).type('text/plain').send('place not found');
     }
