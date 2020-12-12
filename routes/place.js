@@ -150,14 +150,15 @@ router.get('/add', auth, admin, (req, res, next) => res.render('place/place-add'
 router.get('/:place_id', auth, async (req, res, next) => {
   try {
     const auth = req.user;
-    
 
     const place_id = req.params.place_id;
     debug(place_id);
     // debug(`find place by id, place_id =  ${place_id}`);
     const place = await db.findPlaceById(place_id);
+    debug(place);
     const reviews = await db.getReviewsForPlace(place_id);
-    debug(reviews);
+    debug(reviews[0].reviewing_user[0].last_name);
+
     // const placeReviews = await db.getAllReviewsPlacesUsers(place_id);
     if (place) {
       const active = {};

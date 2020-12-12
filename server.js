@@ -11,6 +11,7 @@ const path = require('path');
 const ejs = require('ejs');
 const moment = require('moment');
 const bodyParser = require('body-parser');
+const helpers = require('handlebars-helpers')();
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const GridFsStorage = require('multer-gridfs-storage');

@@ -32,7 +32,7 @@ router.get('/', async (req, res, next) => {
     }
     const pipeline = [
       {
-        $match: matchStage,
+        $match: {matchStage},
       },
       {
         $lookup: {

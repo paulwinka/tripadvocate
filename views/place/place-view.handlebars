@@ -15,14 +15,14 @@
   <div class="row">
     <div class="col col-md-12 col-lg-12 col-xl-12 rounding-edge">
       <div class="card mb-3 rounding-edge">
-        <img class="card-img-top-view rounding-edge" src="/uploads/{{place.image.filename}}"
-            alt=""></img>
+        <img class="card-img-top-view rounding-edge" src="/uploads/{{place.image.filename}}" alt=""></img>
       </div>
       <div class="card">
         <ul class="list-group list-group-flush">
           <li class="list-group-item">{{place.name}}</li>
           <li class="list-group-item"><span class="badge badge-primary">{{place.category}}</span></li>
-          <li class="list-group-item">{{place.city}}{{#if place.state}}, {{place.state}}{{else}}, {{/if}}{{place.country}}</li>
+          <li class="list-group-item">{{place.city}}{{#if place.state}}, {{place.state}}{{else}},
+            {{/if}}{{place.country}}</li>
         </ul>
       </div>
       {{#if place.description}}
@@ -45,10 +45,20 @@
       <div class="card">
         <div class="card-body">
           <div class="card-title">"{{title}}"</div>
-          <div class="card-subtitle">By: {{user_id}} </div>
-          <div class="card-subtitle">Score: {{score}} </div>
+          <div class="card-subtitle">By: {{#each reviewing_user}}{{username}} {{/each}}</div>
+          <div class="card-subtitle">Score: ({{score}})
+            <span style="color:yellow">{{#if (eq score 1)}} <i class="fas fa-star"></i>{{/if}}
+            {{#if (eq score 2)}} <i class="fas fa-star"></i><i class="fas fa-star"></i>{{/if}}
+            {{#if (eq score 3)}} <i class="fas fa-star"></i><i class="fas fa-star"></i><i
+            class="fas fa-star"></i>{{/if}}
+            {{#if (eq score 4)}} <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+            class="fas fa-star"></i>{{/if}}
+            {{#if (eq score 5)}} <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+            class="fas fa-star"></i><i class="fas fa-star"></i>{{/if}}</span>
+          </div>
           <div class="card-text mt-1">
             {{description}}
+
           </div>
         </div>
       </div>

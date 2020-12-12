@@ -24,8 +24,24 @@ const getAllUsers = async () => {
 };
 
 const getReviewsForPlace = async (place_id) => {
+  const collation = { locale: 'en_US', strength: 1 };
+  const pipeline = [
+    {
+      $match: {
+        place_id: new ObjectID(place_id),
+      },
+    },
+    {
+      $lookup: {
+        from: 'user',
+        localField: 'user_id',
+        foreignField: '_id',
+        as: 'reviewing_user',
+      },
+    },
+  ];
   const database = await connect();
-  return database.collection('review').find({ place_id: new ObjectID(place_id) }).toArray();
+  return database.collection('review').aggregate(pipeline, { collation: collation }).toArray();
 };
 
 const upsertReview = async (review) => {
