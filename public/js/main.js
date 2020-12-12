@@ -436,7 +436,11 @@ $(() => {
       dataType: 'json',
     })
       .done((res) => {
-        window.location = new URL(`/review/admin`, window.location.href);
+        if (res.error) {
+          $('#edit-review-form output').html(res.error);
+        } else {
+          window.location = new URL(`/admin/review`, window.location.href);
+        }
       })
       .fail((xhr, textStatus, err) => {
         $('#edit-review-form output').html(`${textStatus}\n{err}`);
