@@ -1,0 +1,50 @@
+<main class="container mt-5">
+  <div class="d-flex flex-column justify-content-between align-items-center mb-3">
+    {{> button-menu}}
+    <h1>All the reviews in the database!</h1>
+  </div>
+  <form id="search-review-form" method="GET">
+    <fieldset>
+      <legend>Search</legend>
+      <div class="form-group">
+        <label for="search" class="sr-only">
+          Search
+        </label>
+        <div class="input-group mb-3">
+          <input id="reviewSearch" name="q" type="search" class="form-control" placeholder="search..."
+            value="{{search}}" />
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="pageSize" class="sr-only">
+          Page Size
+        </label>
+        <select id="pageSize" name="pageSize" class="custom-select w-auto">
+          {{> select-option-list pager.pageSizeOptions}}
+        </select>
+      </div>
+    </fieldset>
+  </form>
+
+
+
+
+  
+  <div class="d-flex align-items-center">
+    <span id="stream-data-spinner" class="spinner-border m-2"></span>
+    <span id="stream-data-seen" class="m-2" style="font-weight: 900;">
+      Loading...
+    </span>
+  </div>
+  <div id="stream-data" class="d-flex flex-wrap"></div>
+  <div id="search-results" class="d-flex flex-wrap">
+  </div>
+</main>
+
+<script src="/js/oboe-browser.min.js"></script>
+<script defer src="/js/oboe-review-admin.js"></script>

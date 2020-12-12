@@ -4,6 +4,7 @@ const debug = require('debug')('app:routes:place');
 const path = require('path');
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
+const member = require('../middleware/member');
 const multer = require('multer');
 
 const storage = multer.diskStorage({
@@ -17,7 +18,6 @@ const storage = multer.diskStorage({
 });
 // const upload = multer({ dest: 'public/uploads/' });
 const upload = multer({ storage: storage });
-
 
 // const database = await connect();
 
@@ -33,7 +33,6 @@ router.get('/', auth, async (req, res, next) => {
     const auth = req.user;
     const active = {};
     active.places = true;
-
 
     const categoryOptionList = {
       selected: '',
@@ -66,7 +65,6 @@ router.get('/', auth, async (req, res, next) => {
     next(err);
   }
 });
-
 
 router.get('/admin', auth, admin, async (req, res, next) => {
   try {
@@ -131,9 +129,8 @@ router.get('/admin', auth, admin, async (req, res, next) => {
   }
 });
 
-
 // ROUTE: EDIT PLACE FORM (PUT)
-router.get('/edit/:place_id', (req, res, next) => {
+router.get('/edit/:place_id', auth, admin, (req, res, next) => {
   const place_id = req.params.place_id;
   db.findPlaceById(place_id)
     .then((place) => {
@@ -147,7 +144,7 @@ router.get('/edit/:place_id', (req, res, next) => {
 });
 
 // ROUTE: ADD PLACE FORM (POST)
-router.get('/add', auth, (req, res, next) => res.render('place/place-add', { title: 'Add Place' }));
+router.get('/add', auth, admin, (req, res, next) => res.render('place/place-add', { title: 'Add Place' }));
 
 // ROUTE: VIEW PLACE (GET): /place
 router.get('/:place_id', auth, async (req, res, next) => {
@@ -171,18 +168,6 @@ router.get('/:place_id', auth, async (req, res, next) => {
   }
 });
 
-router.post('/upload', upload.single('uploaded_file'), (req, res, next) => {
-  debug(req.file);
-  const file = req.file;
-  if (!file) {
-    const error = new Error('Please upload a file');
-    error.httpStatusCode = 400;
-    return next(error);
-  }
-  res.send(file);
-});
-
-// allows it to be seen elsewhere in app
 module.exports = router;
 
 // const place_id = req.params.place_id;
@@ -192,3 +177,14 @@ module.exports = router;
 //   res.render('place/place-view', { title: place.title, place });
 // } else {
 //   res.status(404).type('text/plain').send('place not found')
+
+// router.post('/upload', upload.single('uploaded_file'), (req, res, next) => {
+//   debug(req.file);
+//   const file = req.file;
+//   if (!file) {
+//     const error = new Error('Please upload a file');
+//     error.httpStatusCode = 400;
+//     return next(error);
+//   }
+//   res.send(file);
+// });

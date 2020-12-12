@@ -27,6 +27,22 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.get('/admin', auth, admin, async (req, res, next) => {
+  try {
+    const auth = req.user;
+    const active = {};
+    active.reviews = true;
+
+    res.render('review/review-list-admin', {
+      title: 'Home Page: reviews to see',
+      user: auth,
+      active,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 // ADD REVIEW FORM
 router.get('/add', auth, (req, res, next) => {
   res.render('review/review-add', { title: 'Add Review', auth: req.user });
@@ -39,31 +55,36 @@ router.get('/add/:place_id', auth, async (req, res, next) => {
 });
 
 // EDIT REVIEW FORM
-router.get('/edit/:id', auth, (req, res, next) => {
-  const id = req.params.id;
-  db.findReviewsByReviewId(id).then((review) => {
-    if (review && review.user_id == req.user.user_id) {
-      res.render('review/review-edit', { title: 'Edit Review', review, auth: req.user });
-      debug(`${review.review_id}`);
-      // debug(`${review.review_text}`);
+router.get('/edit/:id/admin', auth, admin, async (req, res, next) => {
+  try {
+    const active = {};
+    active.admin = true;
+    const auth = req.user;
+    const id = req.params.id;
+    debug(id);
+    const review = await db.getReviewById(id);
+    debug(review);
+    if (review) {
+      res.render('review/review-edit-admin', { review, user: auth, active, title: 'Edit Review - Admin' });
     } else {
-      // res.status(404).type('text/plain').send('no review found');
-      next();
+      res.status(404).type('text/plain').send('no review found');
     }
-  });
+  } catch (err) {
+    debug(err.stack);
+  }
 });
 
 // VIEW SINGLE REVIEW
-router.get('/:id', async (req, res, next) => {
-  const id = req.params.id;
-  const review = await db.getUserPlaceReviewInfoForSingleReviewView(id);
-  debug(`what is the review ${review.headline}`);
-  if (review) {
-    res.render('review/review-view', { title: 'Review view', review });
-  } else {
-    res.status(404).type('text/plain').send('no review found');
-  }
-});
+// router.get('/:id', async (req, res, next) => {
+//   const id = req.params.id;
+//   const review = await db.getUserPlaceReviewInfoForSingleReviewView(id);
+//   debug(`what is the review ${review.headline}`);
+//   if (review) {
+//     res.render('review/review-view', { title: 'Review view', review });
+//   } else {
+//     res.status(404).type('text/plain').send('no review found');
+//   }
+// });
 
 router.get('/:id/auth', auth, async (req, res, next) => {
   const user = req.user;

@@ -4,6 +4,7 @@ $(() => {
   const output = $('#stream-data')[0];
   let seen = 0;
   // CALLS THE streamData() WHICH ADDS ALL THE ITEMS TO THE PAGE.
+  // DON'T USE ONLOAD WITH JQUERY, THIS CODE BROKE THE MOBILE EXPERIENCE
   // window.onload = () => {
   //   setTimeout(streamData, 1000);
   // };

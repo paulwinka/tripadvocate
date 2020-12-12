@@ -22,6 +22,8 @@ const db = require('./db');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 
+db.connect();
+
 // express, handlebars, and body parser (urlenconded) configuration
 const app = express();
 

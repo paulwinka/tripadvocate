@@ -424,6 +424,25 @@ $(() => {
       });
   });
 
+  $('#edit-review-form').on('submit', (evt) => {
+    evt.preventDefault();
+    const id = $('#_id').val();
+    const formData = $('#edit-review-form').serialize();
+    console.log(formData);
+    $.ajax({
+      method: 'POST',
+      url: `/api/review/${id}`,
+      data: formData,
+      dataType: 'json',
+    })
+      .done((res) => {
+        window.location = new URL(`/review/admin`, window.location.href);
+      })
+      .fail((xhr, textStatus, err) => {
+        $('#edit-review-form output').html(`${textStatus}\n{err}`);
+      });
+  });
+
   $('#add-review-form').on('submit', (evt) => {
     evt.preventDefault();
     const formData = $(evt.target).serialize();

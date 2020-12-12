@@ -1,0 +1,33 @@
+<main class="container mt-5">
+  <h1>Edit Review as Admin</h1>
+  <form id="edit-review-form" action="/api/review/{{review._id}}" method="POST" class="form needs-validation mt-3"
+    novalidate>
+    <input type="hidden" class="form-control" name="_id" id="_id" value="{{review._id}}">
+    <input type="hidden" class="form-control" name="place_id" id="place_id" value="{{review.place_id}}">
+    <input type="hidden" class="form-control" name="user_id" id="user_id" value="{{review.user_id}}">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" name="title" id="title" value="{{review.title}}">
+      <div id="title-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="score">score, 1 to 5</label>
+      <input type="number" class="form-control" name="score" id="title" value="{{review.score}}">
+      <div id="review_score_error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <label for="description">Review Text</label>
+      <textarea id="description" class="form-control" name="description" rows="10"
+        cols="50">{{review.description}}</textarea>
+      <div id="description-error" class="text-danger"></div>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Save</button>
+      <input class="btn btn-secondary" type="reset" value="Reset">
+    </div>
+    <div class="form-group">
+      <output class="text-danger"></output>
+    </div>
+  </form>
+
+</main>

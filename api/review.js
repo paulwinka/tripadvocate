@@ -39,12 +39,20 @@ router.get('/', async (req, res, next) => {
           from: 'place',
           localField: 'place_id',
           foreignField: '_id',
-          as: 'place',
+          as: 'places',
         },
       },
       {
-        $unwind: '$place',
+        $lookup: {
+          from: 'user',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'users',
+        },
       },
+      // {
+      //   $unwind: '$place',
+      // },
     ];
     const connection = await db.connect();
     const cursor = connection.collection('review').aggregate(pipeline, { collation: collation });
@@ -55,7 +63,7 @@ router.get('/', async (req, res, next) => {
     res.write('[\n');
     for await (const doc of cursor) {
       res.write(JSON.stringify(doc));
-      debug(JSON.stringify(doc));
+      // debug(JSON.stringify(doc));
       res.write(',\n');
     }
     res.end('null]');
@@ -97,46 +105,49 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.post('/:place_id', async (req, res, next) => {
+router.post('/:id', async (req, res, next) => {
   // debug(`add review ${JSON.stringify(req.body)}`);
   try {
     const schema = Joi.object({
-      user_id: Joi.number().required(),
-      place_id: Joi.number().required(),
+      _id: Joi.string().required(),
+      place_id: Joi.string().required(),
+      user_id: Joi.string().required(),
       title: Joi.string().required(),
-      review_text: Joi.string().required(),
+      score: Joi.number().required(),
+      description: Joi.string().required(),
     });
     let review = req.body;
-    review.user_id = req.user.user_id;
-    review.place_id = req.params.place_id;
-    review = await schema.validateAsync(review);
-    const insertReview = await db.insertReview(review);
-    res.json(insertReview);
-  } catch (err) {
-    sendError(err, res);
-  }
-});
-
-// PUT
-router.put('/:id', async (req, res, next) => {
-  try {
-    const schema = Joi.object({
-      user_id: Joi.number().required(),
-      review_id: Joi.number().required(),
-      title: Joi.string().required(),
-      review_text: Joi.string().required(),
-    });
-    let review = req.body;
-    review.review_id = req.params.id;
-    review.user_id = req.user.user_id;
+    // review.user_id = req.user.user_id;
+    review._id = req.params.id;
+    debug(review);
     review = await schema.validateAsync(review, { abortEarly: false });
-    // if ((await db.findReviewsByReviewId(review.review_id)).user_id == req.user.user_id) { }
     const updateReview = await db.updateReview(review);
     res.json(updateReview);
   } catch (err) {
     sendError(err, res);
   }
 });
+
+// PUT
+// router.put('/:id', async (req, res, next) => {
+//   try {
+//     const schema = Joi.object({
+//       user_id: Joi.number().required(),
+//       review_id: Joi.number().required(),
+//       title: Joi.string().required(),
+//       review_text: Joi.string().required(),
+//     });
+//     let review = req.body;
+//     review.review_id = req.params.id;
+//     review.user_id = req.user.user_id;
+//     review = await schema.validateAsync(review, { abortEarly: false });
+//     // if ((await db.findReviewsByReviewId(review.review_id)).user_id == req.user.user_id) { }
+//     const updateReview = await db.updateReview(review);
+//     res.json(updateReview);
+//   } catch (err) {
+//     sendError(err, res);
+//   }
+// });
 
 // DELETE
 router.delete('/:id', async (req, res, next) => {

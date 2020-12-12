@@ -13,6 +13,7 @@ const connect = async () => {
     const poolSize = config.get('db.poolSize');
     const client = await MongoClient.connect(dbUrl, { useUnifiedTopology: true, poolSize: poolSize });
     _database = client.db(dbName);
+    debug('***DATABASE CONNECTED***');
   }
   return _database;
 };
@@ -61,6 +62,11 @@ const upsertPlace = async (place) => {
 const getUserByUsername = async (username) => {
   const database = await connect();
   return database.collection('user').findOne({ username });
+};
+
+const getReviewById = async (_id) => {
+  const database = await connect();
+  return database.collection('review').findOne({ _id: new ObjectID(_id)});
 };
 
 const getUserByEmail = async (email) => {
@@ -195,6 +201,22 @@ const updateUser = async (user) => {
   );
 };
 
+const updateReview = async (review) => {
+  const database = await connect();
+  return database.collection('review').updateOne(
+    { _id: new ObjectID(review._id) },
+    {
+      $set: {
+        title: review.title,
+        score: review.score,
+        description: review.description,
+      },
+    },
+    { upsert: false }
+  );
+};
+
+
 const deleteUser = async (user) => {
   const database = await connect();
   return database.collection('user').deleteOne({ _id: ObjectID(user._id) });
@@ -245,6 +267,8 @@ module.exports = {
   upsertPlace,
   deletePlace,
   upsertReview,
+  getReviewById,
+  updateReview,
   // getUserProfileData,
 };
 
