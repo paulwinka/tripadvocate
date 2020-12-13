@@ -73,12 +73,29 @@ app.use(express.urlencoded({ extended: false }));
 
 //routes location
 // placeholder for home page
-app.get('/', (req, res) => res.redirect('account/login'));
+// app.get('/', (req, res) => res.redirect('account/login'));
+// app.get('/', (req, res) => res.redirect('/'));
+app.use('/', require('./routes/home'));
 app.use('/place', require('./routes/place'));
 app.use('/user', require('./routes/user'));
 app.use('/review', require('./routes/review'));
 app.use('/account', require('./routes/account'));
 app.use('/home', require('./routes/home'));
+
+// app.get('/', async (req, res, next) => {
+//   try {
+//     const auth = req.user;
+//     const active = {};
+//     active.reviews = true;
+//     res.render('home/start', {
+//       title: 'Home Page: reviews to see',
+//       user: auth,
+//       active,
+//     });
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 // api stuff
 app.use('/api/place', require('./api/place'));

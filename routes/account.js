@@ -111,7 +111,7 @@ router.post('/login', async (req, res, next) => {
       res.cookie('auth_token', token, { maxAge: 60 * 60 * 1000 });
       debug(user);
       await db.updateLastLogin(user._id);
-      res.redirect('/account/me');
+      res.redirect('/');
     }
   } catch (err) {
     next(err);

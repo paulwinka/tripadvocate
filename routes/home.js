@@ -10,8 +10,11 @@ router.use(express.urlencoded({ extended: false }));
 router.use(express.json());
 
 router.get('/', auth, async (req, res, next) => {
-  const places = db.get
-  res.render('home/start', { title: 'TripAdvocate: Home', auth: req.user });
+  const auth = req.user;
+  const active = {};
+  active.home = true;
+  const places = db.get;
+  res.render('home/start', { title: 'TripAdvocate: Home', user: auth, active });
 });
 
 module.exports = router;
