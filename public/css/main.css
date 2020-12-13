@@ -67,3 +67,7 @@ legend {
 .rounding-edge {
   border-radius: 5%;
 }
+
+.text-decoration-underline {
+  text-decoration: underline;
+}

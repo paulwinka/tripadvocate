@@ -104,8 +104,8 @@ router.post('/', async (req, res, next) => {
     sendError(err, res);
   }
 });
-
-router.post('/:id', async (req, res, next) => {
+//EDIT REVIEW USER
+router.post('/:id', auth, async (req, res, next) => {
   // debug(`add review ${JSON.stringify(req.body)}`);
   try {
     const schema = Joi.object({
@@ -117,19 +117,28 @@ router.post('/:id', async (req, res, next) => {
       description: Joi.string().required(),
     });
     let review = req.body;
-    // review.user_id = req.user.user_id;
-    review._id = req.params.id;
-    debug(review);
-    review = await schema.validateAsync(review, { abortEarly: false });
-    const updateReview = await db.updateReview(review);
-    res.json(updateReview);
+    if (review.user_id == req.user._id) {
+      review._id = req.params.id;
+      debug('TEST');
+      // debug(review);
+      debug('TEST');
+      review = await schema.validateAsync(review, { abortEarly: false });
+      const updateReview = await db.updateReview(review);
+      // debug(updateReview);
+      res.json(updateReview);
+    } else {
+      res.render('error/basic', { title: 'Not your review!', message: 'you can only edit your own reviews' });
+    }
+    // review.user_id = req.user._id;
   } catch (err) {
+    debug(err.stack);
     sendError(err, res);
   }
 });
 // ADD REVIEW
 router.post('/:id/add', auth, async (req, res, next) => {
   // debug(`add review ${JSON.stringify(req.body)}`);
+  const auth = req.user;
   try {
     const schema = Joi.object({
       place_id: Joi.string().required(),
@@ -142,13 +151,40 @@ router.post('/:id/add', auth, async (req, res, next) => {
     review.place_id = req.params.id;
     review.user_id = req.user._id;
     debug(review);
-    review = await schema.validateAsync(review, { abortEarly: false });
-    const updateReview = await db.upsertReview(review);
-    res.json(updateReview);
+    const reviewMade = await db.verifyReviewSubmitted(review.place_id, review.user_id);
+    debug('*****');
+    debug(reviewMade);
+    debug('*****');
+    if (!reviewMade) {
+      debug(review);
+      debug('HELLO');
+      review = await schema.validateAsync(review, { abortEarly: false });
+      const updateReview = await db.updateReview(review);
+      res.json(updateReview);
+    } else {
+      res.json({ error: `You already made a review.`, reviewMade: reviewMade._id });
+    }
   } catch (err) {
     sendError(err, res);
   }
 });
+
+// DELETE
+router.delete('/:id', async (req, res, next) => {
+  debug(`delete review ${JSON.stringify(req.body)}`);
+  try {
+    const schema = Joi.number().min(1).required().label('id');
+    const id = await schema.validateAsync(req.params.id);
+    const review = db.findReviewsByReviewId(id);
+    review.review_id = req.params.id;
+    const results = await db.deleteReview(review);
+    res.json(results);
+  } catch (err) {
+    sendError(err, res);
+  }
+});
+
+module.exports = router;
 
 // PUT
 // router.put('/:id', async (req, res, next) => {
@@ -170,20 +206,3 @@ router.post('/:id/add', auth, async (req, res, next) => {
 //     sendError(err, res);
 //   }
 // });
-
-// DELETE
-router.delete('/:id', async (req, res, next) => {
-  debug(`delete review ${JSON.stringify(req.body)}`);
-  try {
-    const schema = Joi.number().min(1).required().label('id');
-    const id = await schema.validateAsync(req.params.id);
-    const review = db.findReviewsByReviewId(id);
-    review.review_id = req.params.id;
-    const results = await db.deleteReview(review);
-    res.json(results);
-  } catch (err) {
-    sendError(err, res);
-  }
-});
-
-module.exports = router;

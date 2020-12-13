@@ -44,6 +44,35 @@ const getReviewsForPlace = async (place_id) => {
   return database.collection('review').aggregate(pipeline, { collation: collation }).toArray();
 };
 
+const getSingleReview = async (_id) => {
+  const collation = { locale: 'en_US', strength: 1 };
+  const pipeline = [
+    {
+      $match: {
+        _id: new ObjectID(_id),
+      },
+    },
+    {
+      $lookup: {
+        from: 'user',
+        localField: 'user_id',
+        foreignField: '_id',
+        as: 'reviewing_user',
+      },
+    },
+    {
+      $lookup: {
+        from: 'place',
+        localField: 'place_id',
+        foreignField: '_id',
+        as: 'reviewed_place',
+      },
+    },
+  ];
+  const database = await connect();
+  return database.collection('review').aggregate(pipeline, { collation: collation }).toArray();
+};
+
 const upsertReview = async (review) => {
   const database = await connect();
   return database.collection('review').updateOne(
@@ -60,6 +89,21 @@ const upsertReview = async (review) => {
       },
     },
     { upsert: true }
+  );
+};
+
+const updateReview = async (review) => {
+  const database = await connect();
+  return database.collection('review').updateOne(
+    { _id: new ObjectID(review._id) },
+    {
+      $set: {
+        title: review.title,
+        score: review.score,
+        description: review.description,
+      },
+    },
+    { upsert: false }
   );
 };
 
@@ -223,21 +267,6 @@ const updateUser = async (user) => {
   );
 };
 
-const updateReview = async (review) => {
-  const database = await connect();
-  return database.collection('review').updateOne(
-    { _id: new ObjectID(review._id) },
-    {
-      $set: {
-        title: review.title,
-        score: review.score,
-        description: review.description,
-      },
-    },
-    { upsert: false }
-  );
-};
-
 const deleteUser = async (user) => {
   const database = await connect();
   return database.collection('user').deleteOne({ _id: ObjectID(user._id) });
@@ -266,6 +295,10 @@ const updatePasswordHash = async (email, password_hash) => {
   );
 };
 
+const verifyReviewSubmitted = async (place_id, user_id) => {
+  const database = await connect();
+  return database.collection('review').findOne({ place_id: new ObjectID(place_id), user_id: new ObjectID(user_id) });
+};
 // const getUserProfileData = async;
 
 module.exports = {
@@ -291,6 +324,8 @@ module.exports = {
   getReviewById,
   updateReview,
   getReviewsForPlace,
+  getSingleReview,
+  verifyReviewSubmitted,
   // getUserProfileData,
 };
 

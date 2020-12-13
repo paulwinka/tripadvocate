@@ -11,10 +11,9 @@
     </div>
   </div>
   <h3 class="h3">Review for "{{place.name}}"</h3>
-  <form id="add-review-form" action="/api/review/" method="POST">
-    {{!-- <div class="form-group">
-      <input type="hidden" class="form-control" name="user_id" id="user_id" value="{{auth.user_id}}">
-    </div> --}}
+  {{!-- <form id="add-review-form" action="/api/review/{{place._id}}/add" method="POST" class="form needs-validation" novalidate> --}}
+  <form id="add-review-form" method="POST" class="form needs-validation" novalidate>
+    <input type="hidden" class="form-control" name="user_id" id="user_id" value="{{user._id}}">
     <input type="hidden" class="form-control" name="place_id" id="place_id" value="{{place._id}}">
     <div class="form-group">
       <label for="title">Title</label>

@@ -80,16 +80,17 @@ router.get('/edit/:id/admin', auth, admin, async (req, res, next) => {
 });
 
 // VIEW SINGLE REVIEW
-// router.get('/:id', async (req, res, next) => {
-//   const id = req.params.id;
-//   const review = await db.getUserPlaceReviewInfoForSingleReviewView(id);
-//   debug(`what is the review ${review.headline}`);
-//   if (review) {
-//     res.render('review/review-view', { title: 'Review view', review });
-//   } else {
-//     res.status(404).type('text/plain').send('no review found');
-//   }
-// });
+router.get('/:id', auth, async (req, res, next) => {
+  const auth = req.user;
+  const id = req.params.id;
+  const reviews = await db.getSingleReview(id);
+  debug(reviews);
+  if (reviews) {
+    res.render('review/review-view', { title: 'Review view', reviews, user: auth});
+  } else {
+    res.status(404).type('text/plain').send('no review found');
+  }
+});
 
 router.get('/:id/auth', auth, async (req, res, next) => {
   const user = req.user;

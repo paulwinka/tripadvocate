@@ -127,13 +127,13 @@ $(() => {
     })
       .done((res) => {
         if (res.error) {
-          $('#add-review-form output').html(res.error);
+          $('#add-review-form output').html(`${res.error}\n<a class="text-danger text-decoration-underline" href="/review/${res.reviewMade}">Click here to edit the review!</a>`);
         } else {
           window.location = new URL(`/place/${id}`, window.location.href);
         }
       })
       .fail((xhr, textStatus, err) => {
-        $('#edit-review-form output').html(`${textStatus}\n{err}`);
+        $('#add-review-form output').html(`${textStatus}\n{err}`);
       });
   });
 
@@ -448,6 +448,8 @@ $(() => {
   $('#edit-review-form').on('submit', (evt) => {
     evt.preventDefault();
     const id = $('#_id').val();
+    const place_id = $('#place_id').val();
+
     const formData = $('#edit-review-form').serialize();
     console.log(formData);
     $.ajax({
@@ -459,14 +461,33 @@ $(() => {
       .done((res) => {
         if (res.error) {
           $('#edit-review-form output').html(res.error);
+          // alert('edit');
         } else {
-          window.location = new URL(`/admin/review`, window.location.href);
+          window.location = new URL(`/place/${place_id}`, window.location.href);
         }
       })
       .fail((xhr, textStatus, err) => {
-        $('#edit-review-form output').html(`${textStatus}\n{err}`);
+        $('#edit-review-form output').html(`${textStatus}\n{err.stack}`);
       });
   });
+  // $('#edit-review-form').on('submit', (evt) => {
+  //   evt.preventDefault();
+  //   const id = $('#review_id').val();
+  //   const formData = $(evt.target).serialize();
+  //   $.ajax({
+  //     method: 'PUT',
+  //     url: `/api/review/${id}`,
+  //     data: formData,
+  //     dataType: 'json',
+  //   })
+  //     .done((res) => {
+  //       // alert(res);
+  //       window.location = new URL(`/review/${id}`, window.location.href);
+  //     })
+  //     .fail((xhr, textStatus, err) => {
+  //       $('edit-review-form output').html(`${textStatus}\n{err}`);
+  //     });
+  // });
 
   // $('#add-review-form').on('submit', (evt) => {
   //   evt.preventDefault();
@@ -523,24 +544,7 @@ $(() => {
         $('#edit-place-form output').html(`${textStatus}\n{err}`);
       });
   });
-  $('#edit-review-form').on('submit', (evt) => {
-    evt.preventDefault();
-    const id = $('#review_id').val();
-    const formData = $(evt.target).serialize();
-    $.ajax({
-      method: 'PUT',
-      url: `/api/review/${id}`,
-      data: formData,
-      dataType: 'json',
-    })
-      .done((res) => {
-        // alert(res);
-        window.location = new URL(`/review/${id}`, window.location.href);
-      })
-      .fail((xhr, textStatus, err) => {
-        $('edit-review-form output').html(`${textStatus}\n{err}`);
-      });
-  });
+
   $('#edit-user-form').on('submit', (evt) => {
     evt.preventDefault();
     const id = $('#user_id').val();
