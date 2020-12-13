@@ -159,7 +159,8 @@ router.post('/:id/add', auth, async (req, res, next) => {
       debug(review);
       debug('HELLO');
       review = await schema.validateAsync(review, { abortEarly: false });
-      const updateReview = await db.updateReview(review);
+      const updateReview = await db.upsertReview(review);
+      debug(updateReview);
       res.json(updateReview);
     } else {
       res.json({ error: `You already made a review.`, reviewMade: reviewMade._id });
