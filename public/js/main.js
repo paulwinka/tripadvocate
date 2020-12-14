@@ -56,6 +56,51 @@ $(() => {
       },
     });
   });
+
+    $(document).on('click', '.delete-review-list', (evt) => {
+      const button = $(evt.currentTarget);
+      const id = button.data('id');
+      const name = button.data('name');
+
+      // const id = $(evt.target).data('id');
+      // const name = $(evt.target).data('name');
+      // bootbox.alert("This is the default alert!");
+      bootbox.confirm({
+        title: 'Delete review',
+        message: `Delete review for ${name}?`,
+        buttons: {
+          cancel: {
+            label: '<i class="fa fa-times"></i> Cancel',
+          },
+          confirm: {
+            label: '<i class="fa fa-check"></i> Confirm',
+          },
+        },
+        callback: (result) => {
+          console.log('This was logged in the callback: ' + result);
+          if (result) {
+            $.ajax({
+              method: 'DELETE',
+              url: `/api/review/${id}/admin`,
+              dataType: 'json',
+            })
+              .done((res) => {
+                if (res.error) {
+                  alert(res.error);
+                } else {
+                  button.parents('.col-12').remove();
+                }
+                // alert(res);
+                // window.location.reload();
+                //send to list instead since item will not be there;
+              })
+              .fail((xhr, textStatus, err) => {
+                alert(`${textStatus}\n${err}`);
+              });
+          }
+        },
+      });
+    });
   // DELETE FROM LIST
   // $('.delete-place-from-list').on('click', (evt) => {
   //   const id = $(evt.target).data('id');

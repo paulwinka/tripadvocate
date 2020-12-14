@@ -82,13 +82,16 @@ router.get('/', auth, async (req, res, next) => {
 
     const connection = await db.connect();
     const cursor = connection.collection('place').aggregate(pipeline, { collation: collation });
-    debug(cursor);
+    // debug(cursor);
+    debug('cursor?');
+    debug('cursor?');
 
     // write the JSON file
     res.type('application/json');
     res.write('[\n');
     for await (const doc of cursor) {
       res.write(JSON.stringify(doc));
+      debug(JSON.stringify(doc));
       res.write(',\n');
     }
     res.end('null]');

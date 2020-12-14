@@ -277,6 +277,11 @@ const deletePlace = async (place) => {
   return database.collection('place').deleteOne({ _id: ObjectID(place._id) });
 };
 
+const deleteReview = async (_id) => {
+  const database = await connect();
+  return database.collection('review').deleteOne({ _id: ObjectID(_id) });
+};
+
 const findPlaceById = async (id) => {
   const database = await connect();
   return database.collection('place').findOne({ _id: new ObjectID(id) });
@@ -326,6 +331,7 @@ module.exports = {
   getReviewsForPlace,
   getSingleReview,
   verifyReviewSubmitted,
+  deleteReview,
   // getUserProfileData,
 };
 

@@ -104,5 +104,7 @@ router.get('/:id/auth', auth, async (req, res, next) => {
   }
 });
 
+
+
 // allows it to be seen elsewhere in app
 module.exports = router;

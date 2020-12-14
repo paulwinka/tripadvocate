@@ -3,11 +3,13 @@ const db = require('../db');
 const debug = require('debug')('app:api:review');
 const Joi = require('joi');
 const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
+const path = require('path');
 
 const router = express.Router();
 router.use(express.urlencoded({ extended: false }));
 router.use(express.json());
-router.use(auth);
+// router.use(auth);
 
 // general error handler
 const sendError = (err, res) => {
@@ -24,6 +26,7 @@ router.get('/', async (req, res, next) => {
   debug('get all reviews api');
   try {
     const q = req.query.q;
+    debug(q);
     const collation = { locale: 'en_US', strength: 1 };
 
     const matchStage = {};
@@ -63,7 +66,60 @@ router.get('/', async (req, res, next) => {
     res.write('[\n');
     for await (const doc of cursor) {
       res.write(JSON.stringify(doc));
-      // debug(JSON.stringify(doc));
+      debug(JSON.stringify(doc));
+      res.write(',\n');
+    }
+    res.end('null]');
+  } catch (err) {
+    sendError(err, res);
+  }
+});
+
+router.get('/admin', async (req, res, next) => {
+  debug('get all reviews api admin!!!');
+  try {
+    const collation = { locale: 'en_US', strength: 1 };
+    const q = req.query.q;
+    debug('*******************');
+    debug(q);
+
+    const matchStage = {};
+    if (q) {
+      matchStage.$text = { $search: q };
+    }
+    const pipeline = [
+      { $match: matchStage },
+      {
+        $lookup: {
+          from: 'place',
+          localField: 'place_id',
+          foreignField: '_id',
+          as: 'places',
+        },
+      },
+      {
+        $lookup: {
+          from: 'user',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'users',
+        },
+      },
+    ];
+    const connection = await db.connect();
+    // const cursor = connection.collection('place').aggregate(pipeline, { collation: collation });
+
+    const cursor = connection.collection('review').aggregate(pipeline, { collation: collation });
+    debug('cursor?');
+    // debug(cursor);
+    debug('cursor?');
+
+    // write the JSON file
+    res.type('application/json');
+    res.write('[\n');
+    for await (const doc of cursor) {
+      res.write(JSON.stringify(doc));
+      debug(JSON.stringify(doc));
       res.write(',\n');
     }
     res.end('null]');
@@ -184,6 +240,20 @@ router.delete('/:id', async (req, res, next) => {
     sendError(err, res);
   }
 });
+
+// DELETE
+router.delete('/:id/admin', async (req, res, next) => {
+  try {
+    const schema = Joi.string().min(1).required().label('id');
+    const id = await schema.validateAsync(req.params.id);
+    debug(id);
+    const results = await db.deleteReview(id);
+    res.json(results);
+  } catch (err) {
+    sendError(err, res);
+  }
+});
+
 
 module.exports = router;
 

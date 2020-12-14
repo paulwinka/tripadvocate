@@ -9,7 +9,8 @@
       </nav>
     </div>
     <div class="col-md-6 d-flex flex-row justify-content-end align-items-center">
-      <a href="/review/add/{{place._id}}" id="add-review-button" class="btn btn-primary"><i class="fas fa-book-open"></i> Add Review</a>
+      {{#if user}}<a href="/review/add/{{place._id}}" id="add-review-button" class="btn btn-primary"><i
+          class="fas fa-book-open"></i> Add Review</a>{{/if}}
     </div>
   </div>
 
@@ -142,9 +143,9 @@
           </form>
         </div>
         {{!-- <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div> --}}
+          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div> --}}
       </div>
     </div>
   </div>
@@ -170,9 +171,9 @@
           </form>
         </div>
         {{!-- <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div> --}}
+          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div> --}}
       </div>
     </div>
   </div>
