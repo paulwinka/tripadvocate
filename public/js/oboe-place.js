@@ -28,7 +28,7 @@ $(() => {
             <div class="card-body py-0">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item p-0"><a href="/place/${item._id}">${item.name}</a></li>
-                <li class="list-group-item p-0">${item.city}${item.state ? `,` + item.state : ``}</li>
+                <li class="list-group-item p-0">${item.city}${item.state ? `, ` + item.state : ``}</li>
                 <li class="list-group-item p-0">${item.country}</li>
               </ul>
               </div>
