@@ -1,8 +1,18 @@
-{{!-- <main class="container mt-5"> --}}
-  <div class="d-flex flex-column justify-content-between align-items-center mb-3">
-    {{> button-menu}}
-    <h1>Places to see, things to do!</h1>
+<main class="container mt-2">
+
+  <div class="row">
+    <div class="col-md-6">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">Administrate Places</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="col-md-6 d-flex flex-row justify-content-end align-items-center">
+      <button id="add-crazy-place" class="btn btn-info"><i class="fas fa-globe"></i> Add Place</a></button>
+    </div>
   </div>
+
   {{!-- <div id="message">This is my modal</div> --}}
   <div class="modal fade" tabindex="-1" role="dialog" id="message">
     <div class="modal-dialog" role="document">

@@ -307,13 +307,16 @@ router.post('/reset_password/:token', async (req, res, next) => {
   }
 });
 router.get('/me', auth, async (req, res) => {
-  const user = req.user;
-  // const profileItems = await db.getUserProfileData(user.user_id);
-  const profileItems = null;
   const active = {};
   const profile = 'profile';
   active[profile] = true;
-  res.render('account/profile', { title: 'Profile!', user: user, profileItems, active });
+
+  const auth = req.user;
+  debug(auth._id);
+  const reviewItems = await db.getReviewsForUser(auth._id);
+  const profileItems = await db.getUserById(auth._id);
+  debug(profileItems);
+  res.render('account/profile', { title: 'Profile!', user: auth, profileItems, reviewItems, active });
 });
 
 router.get('/logout', (req, res) => {

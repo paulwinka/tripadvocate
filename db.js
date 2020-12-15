@@ -44,6 +44,43 @@ const getReviewsForPlace = async (place_id) => {
   return database.collection('review').aggregate(pipeline, { collation: collation }).toArray();
 };
 
+const getReviewsForUser = async (user_id) => {
+  const collation = { locale: 'en_US', strength: 1 };
+  const pipeline = [
+    {
+      $match: {
+        user_id: new ObjectID(user_id),
+      },
+    },
+    {
+      $lookup: {
+        from: 'place',
+        localField: 'place_id',
+        foreignField: '_id',
+        as: 'user_places',
+      },
+    },
+    {
+      $lookup: {
+        from: 'user',
+        localField: 'user_id',
+        foreignField: '_id',
+        as: 'user_user',
+      },
+    },
+    // {
+    //   $lookup: {
+    //     from: 'place',
+    //     localField: 'user_reviews.place_id',
+    //     foreignField: '_id',
+    //     as: 'user_places',
+    //   },
+    // },
+  ];
+  const database = await connect();
+  return database.collection('review').aggregate(pipeline, { collation: collation }).toArray();
+};
+
 const getSingleReview = async (_id) => {
   const collation = { locale: 'en_US', strength: 1 };
   const pipeline = [
@@ -331,6 +368,7 @@ module.exports = {
   getReviewById,
   updateReview,
   getReviewsForPlace,
+  getReviewsForUser,
   getSingleReview,
   verifyReviewSubmitted,
   deleteReview,
