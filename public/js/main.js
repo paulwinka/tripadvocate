@@ -57,50 +57,50 @@ $(() => {
     });
   });
 
-    $(document).on('click', '.delete-review-list', (evt) => {
-      const button = $(evt.currentTarget);
-      const id = button.data('id');
-      const name = button.data('name');
+  $(document).on('click', '.delete-review-list', (evt) => {
+    const button = $(evt.currentTarget);
+    const id = button.data('id');
+    const name = button.data('name');
 
-      // const id = $(evt.target).data('id');
-      // const name = $(evt.target).data('name');
-      // bootbox.alert("This is the default alert!");
-      bootbox.confirm({
-        title: 'Delete review',
-        message: `Delete review for ${name}?`,
-        buttons: {
-          cancel: {
-            label: '<i class="fa fa-times"></i> Cancel',
-          },
-          confirm: {
-            label: '<i class="fa fa-check"></i> Confirm',
-          },
+    // const id = $(evt.target).data('id');
+    // const name = $(evt.target).data('name');
+    // bootbox.alert("This is the default alert!");
+    bootbox.confirm({
+      title: 'Delete review',
+      message: `Delete review for ${name}?`,
+      buttons: {
+        cancel: {
+          label: '<i class="fa fa-times"></i> Cancel',
         },
-        callback: (result) => {
-          console.log('This was logged in the callback: ' + result);
-          if (result) {
-            $.ajax({
-              method: 'DELETE',
-              url: `/api/review/${id}/admin`,
-              dataType: 'json',
+        confirm: {
+          label: '<i class="fa fa-check"></i> Confirm',
+        },
+      },
+      callback: (result) => {
+        console.log('This was logged in the callback: ' + result);
+        if (result) {
+          $.ajax({
+            method: 'DELETE',
+            url: `/api/review/${id}/admin`,
+            dataType: 'json',
+          })
+            .done((res) => {
+              if (res.error) {
+                alert(res.error);
+              } else {
+                button.parents('.col-12').remove();
+              }
+              // alert(res);
+              // window.location.reload();
+              //send to list instead since item will not be there;
             })
-              .done((res) => {
-                if (res.error) {
-                  alert(res.error);
-                } else {
-                  button.parents('.col-12').remove();
-                }
-                // alert(res);
-                // window.location.reload();
-                //send to list instead since item will not be there;
-              })
-              .fail((xhr, textStatus, err) => {
-                alert(`${textStatus}\n${err}`);
-              });
-          }
-        },
-      });
+            .fail((xhr, textStatus, err) => {
+              alert(`${textStatus}\n${err}`);
+            });
+        }
+      },
     });
+  });
   // DELETE FROM LIST
   // $('.delete-place-from-list').on('click', (evt) => {
   //   const id = $(evt.target).data('id');
@@ -172,7 +172,9 @@ $(() => {
     })
       .done((res) => {
         if (res.error) {
-          $('#add-review-form output').html(`${res.error}\n<a class="text-danger text-decoration-underline" href="/review/${res.reviewMade}">Click here to edit the review!</a>`);
+          $('#add-review-form output').html(
+            `${res.error}\n<a class="text-danger text-decoration-underline" href="/review/${res.reviewMade}">Click here to edit the review!</a>`
+          );
         } else {
           window.location = new URL(`/place/${id}`, window.location.href);
         }
@@ -408,6 +410,7 @@ $(() => {
 
   $('#delete-review-from-view').on('click', (evt) => {
     const id = $(evt.target).data('id');
+    const place_id = $(evt.target).data('place');
     const title = $(evt.target).data('title');
     bootbox.confirm({
       title: 'Delete review',
@@ -429,7 +432,7 @@ $(() => {
             dataType: 'json',
           })
             .done((res) => {
-              window.location = new URL(`/review/`, window.location.href);
+              window.location = new URL(`/place/${place_id}`, window.location.href);
             })
             .fail((xhr, textStatus, err) => {
               alert(`${textStatus}\n${err}`);

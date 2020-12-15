@@ -1,27 +1,34 @@
-<h1>Welcome{{#if user}}, {{user.username}}!{{else}}!!{{/if}}</h1>
-<div>TripAdvocate is a site that features restaurants, hotels, and activities with user-submitted reviews so that users
-  of the website can learn more about a destination before they go. It's also Paul Winka's final project, a Ranken
-  Technical College Student in AWD 1111. The project focuses involves all of the following languages, packages,
-  technologies, and concepts:
+<div class="d-flex flex-row justify-content-center">
+  <h1>Welcome{{#if user}}, {{user.username}}!{{else}}!!{{/if}}</h1>
+</div>
+
+<div class="row mt-5">
   <div class="d-flex flex-row">
-    <div>
-      <ol>
-        <ul>javascript</ul>
-        <ul>node.js</ul>
-        <ul>mongo db</ul>
-        <ul>express</ul>
-        <ul>handlebars</ul>
-        <ul>joi</ul>
-        <ul>multer</ul>
-        <ul>express</ul>
-        <ul>encryption & password hashing</ul>
-        <ul>authentication</ul>
-        <ul>authorization</ul>
-        <ul>json web tokens</ul>
-      </ol>
+    <section class="col-6">
+      <p>TripAdvocate is a site that features restaurants, hotels, and activities with user-submitted reviews so that
+        users of the website can learn more about a destination before they go.</p>
+      <p>You can create an account <a href="/account/register">here</a>, login <a href="/account/login">here.</a> Once
+        logged in to the site, you can visit <a href="/place">places</a>, the center of activity for the site. Read about
+          the places and reviews. Create your own reviews and ratings. Alter them if you change your mind later. It's
+          all up to you.</a> </p>
+    </section>
+    <div class="d-flex flex-row justify-content-center col-6">
+      <video class="justify-content-center" width="320" height="240" controls autoplay>
+        <source src="uploads/intro.mp4" type="video/mp4">
+        <img src="uploads/advocate.jpg" alt="Image Not Found">
+      </video>
     </div>
-    <div class="d-flex flex-row justify-content-center"><video width="320" height="240" controls autoplay>
-        <source src="uploads/intro.mp4">" type="video/mp4">
-      </video></div>
   </div>
 </div>
+
+
+
+<script defer>
+  const v = document.querySelector('video'), sources = v.querySelectorAll('source'), lastsource = sources[sources.length - 1];
+  lastsource.addEventListener('error', (evt) => {
+    const d = document.createElement('div');
+    d.innerHTML = v.innerHTML;
+    v.parentNode.replaceChild(d, v);
+  },
+    false);
+</script>

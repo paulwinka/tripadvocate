@@ -227,15 +227,24 @@ router.post('/:id/add', auth, async (req, res, next) => {
 });
 
 // DELETE
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', auth, async (req, res, next) => {
   debug(`delete review ${JSON.stringify(req.body)}`);
   try {
-    const schema = Joi.number().min(1).required().label('id');
-    const id = await schema.validateAsync(req.params.id);
-    const review = db.findReviewsByReviewId(id);
+    const schema = Joi.string().min(1).required().label('id');
+    const review_id = await schema.validateAsync(req.params.id, { abortEarly: false });
+    const review = await db.getReviewById(review_id);
+
+    debug(review);
+    debug(`req.user._id is`);
+    debug(req.user._id);
+    debug(review.user_id);
+    if (review.user_id == req.user._id) {
+      const results = await db.deleteReview(review._id);
+      res.json(results);
+    } else {
+      res.json({ error: `You can only delete your own reviews.` });
+    }
     review.review_id = req.params.id;
-    const results = await db.deleteReview(review);
-    res.json(results);
   } catch (err) {
     sendError(err, res);
   }
@@ -246,14 +255,12 @@ router.delete('/:id/admin', async (req, res, next) => {
   try {
     const schema = Joi.string().min(1).required().label('id');
     const id = await schema.validateAsync(req.params.id);
-    debug(id);
     const results = await db.deleteReview(id);
     res.json(results);
   } catch (err) {
     sendError(err, res);
   }
 });
-
 
 module.exports = router;
 

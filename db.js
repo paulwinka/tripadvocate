@@ -304,6 +304,8 @@ const verifyReviewSubmitted = async (place_id, user_id) => {
   const database = await connect();
   return database.collection('review').findOne({ place_id: new ObjectID(place_id), user_id: new ObjectID(user_id) });
 };
+
+
 // const getUserProfileData = async;
 
 module.exports = {
