@@ -1,9 +1,8 @@
-<main>
+<main class="container mt-5">
   <div class="row">
     <div class="col-md-8">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/Admin">Admin Main</a></li>
           <li class="breadcrumb-item active">Administrate Users</li>
         </ol>
       </nav>
@@ -24,8 +23,10 @@
             <input id="placeSearch" name="q" type="search" class="form-control" placeholder="search..." value="{{search}}" />
             <div class="input-group-append">
               <button type="submit" class="btn btn-primary">
-                Search
+                <i class="fas fa-search"></i> Search
               </button>
+            <input class="btn btn-secondary" type="reset" value="Reset">
+
             </div>
           </div>
         </div>

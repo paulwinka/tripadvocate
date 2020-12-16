@@ -1,7 +1,12 @@
 <main class="container mt-5">
-  <div class="d-flex flex-column justify-content-between align-items-center mb-3">
-    {{> button-menu}}
-    <h1>All the reviews in the database!</h1>
+  <div class="row">
+    <div class="col-md-8">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">Administrate Reviews</li>
+        </ol>
+      </nav>
+    </div>
   </div>
   <form id="search-review-form" method="GET">
     <fieldset>
@@ -14,9 +19,9 @@
           <input id="reviewSearch" name="q" type="search" class="form-control" placeholder="search..."
             value="{{search}}" />
           <div class="input-group-append">
-            <button type="submit" class="btn btn-primary">
-              Search
-            </button>
+            <button type="submit" class="btn btn-primary"> <i class="fas fa-search"></i> Search </button>
+            <input class="btn btn-secondary" type="reset" value="Reset">
+
           </div>
         </div>
       </div>

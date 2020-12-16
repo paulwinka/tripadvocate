@@ -33,7 +33,28 @@ $(() => {
             <a href="/review/${item._id}">"${item.title}"</a>
           </div>
           <div class="card-body d-flex flex-row align-items-center py-0">
-            Score: ${item.score}
+            Score: 
+            ${item.score == 1 ? `<span style="color: yellow"><i class="fas fa-star"></i></span>` : ''}
+            ${
+              item.score == 2
+                ? `<span style="color: yellow"><i class="fas fa-star"></i><i class="fas fa-star"></i></span>`
+                : ''
+            }
+            ${
+              item.score == 3
+                ? `<span style="color: yellow"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>`
+                : ''
+            }
+            ${
+              item.score == 4
+                ? `<span style="color: yellow"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>`
+                : ''
+            }
+            ${
+              item.score == 5
+                ? `<span style="color: yellow"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>`
+                : ''
+            }
           </div>
         </div>
         <div class="card-body d-flex flex-row justify-content-end align-items-center py-0">
