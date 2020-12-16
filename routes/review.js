@@ -9,7 +9,6 @@ const admin = require('../middleware/admin');
 const router = express.Router();
 
 //routes
-
 // VIEW ALL REVIEWS
 router.get('/', async (req, res, next) => {
   try {

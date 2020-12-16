@@ -1,38 +1,62 @@
 <main class="container mt-5">
-  <h1 class="mt-5">My profile, places, and reviews</h1>
+  <h1 class="mt-5">My profile & reviews</h1>
   <h2 class="mt-5">My User Information:</h2>
   <div class="row">
     <div class="col-md-12">
       <div class="card">
         <div class="card-body">
-          <div>Username: {{user.username}}</div>
-          <div>Email: {{user.email}}</div>
-          <div>From: {{user.city}}, {{user.state}}, {{user.country}} </div>
-          <div>Last login: {{formatDatetime user.last_login_time}} </div>
+          {{!-- {{#if profileItems}}{{#each profileItems}} --}}
+          <div>Username: {{profileItems.username}}</div>
+          <div>Email: {{profileItems.email}}</div>
+          <div>From: {{profileItems.city}}, {{profileItems.state}}, {{profileItems.country}} </div>
+          <div>Last login: {{formatDatetime profileItems.last_login_time}} </div>
+          <div>Registration: {{formatDatetime profileItems.registration_time}} </div>
+          {{!-- {{/each}}{{/if}} --}}
         </div>
       </div>
     </div>
   </div>
 
 
-  <h2 class="mt-5">My Reviews:</h2>
-  {{#if profileItems}}
-  <div class="row">
-    {{#each profileItems}}
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="card-title"><a href="/review/{{review_id}}/auth">"{{review_title}}"</a></div>
-          <div>Place: {{place_title}}</div>
-          <div>Location: {{place_city}}, {{place_state}}, {{place_country}}</div>
-          <div class="card-text">
-            {{review_text}}
-          </div>
+
+<div class="row mt-3">
+  {{#if reviewItems}}
+  <div class="col-md-4">
+    <h2>Reviews</h2>
+    {{#each reviewItems}}
+        {{!-- {{#each user_user}}{{username}}{{/each}} --}}
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title underLink"><a href="/review/{{_id}}">"{{title}}"</a></div>
+        <div class="card-subtitle mb-2">Review of: {{#each user_places}}{{name}} {{/each}}</div>
+        <div class="card-subtitle">Score: ({{score}})
+          <span style="color:yellow">{{#if (eq score 1)}} <i class="fas fa-star"></i>{{/if}}
+            {{#if (eq score 2)}} <i class="fas fa-star"></i><i class="fas fa-star"></i>{{/if}}
+            {{#if (eq score 3)}} <i class="fas fa-star"></i><i class="fas fa-star"></i><i
+              class="fas fa-star"></i>{{/if}}
+            {{#if (eq score 4)}} <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+              class="fas fa-star"></i>{{/if}}
+            {{#if (eq score 5)}} <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+              class="fas fa-star"></i><i class="fas fa-star"></i>{{/if}}</span>
+        </div>
+        <div class="card-text mt-1">
+          {{description}}
+
         </div>
       </div>
     </div>
     {{/each}}
   </div>
-  {{else}}
-  {{/if}}
+</div>
+{{else}}
+<div class="col-md-4">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-text">
+        You don't have any reviews yet.
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}
 </main>
