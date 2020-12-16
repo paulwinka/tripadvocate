@@ -28,19 +28,19 @@ fontsize=10
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>602</x>
-      <y>98</y>
+      <x>434</x>
+      <y>84</y>
       <w>294</w>
-      <h>210</h>
+      <h>154</h>
     </coordinates>
     <panel_attributes>review
 --
-review_id int not null PK
-user_id int not null FK
-place_id int not null FK
+_id: ObjectID PK
 
-title varchar(100) not null
-review_text text not null
+user_id: ObjectID FK
+place_id: ObjectID FK
+title: string
+description: string
 
 </panel_attributes>
     <additional_attributes/>
@@ -48,41 +48,26 @@ review_text text not null
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>112</x>
-      <y>98</y>
+      <x>28</x>
+      <y>84</y>
       <w>294</w>
-      <h>224</h>
+      <h>266</h>
     </coordinates>
     <panel_attributes>user
 --
-user_id PK
+_id: ObjectID PK
 
-first_name varchar(45) not null
-last_name varchar(45) not null
-email varchar(100) not null
-city varchar (100) not null
-state varchar (2) not null
-country varchar(50) not null
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1078</x>
-      <y>98</y>
-      <w>294</w>
-      <h>224</h>
-    </coordinates>
-    <panel_attributes>place
---
-place_id int not null PK
-
-title varchar(100) no null
-category varchar(20) not null
-city varchar(50) not null
-state varchar(2) null
-country varchar(50) not null
+role: string
+first_name: string
+last_name: string 
+username: string
+password: string
+password_hash: string
+city: string
+state: string
+country: string
+registration_time: date
+last_login_time: date
 
 </panel_attributes>
     <additional_attributes/>
@@ -90,23 +75,23 @@ country varchar(50) not null
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>406</x>
+      <x>308</x>
       <y>126</y>
-      <w>210</w>
+      <w>154</w>
       <h>56</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=m
 writes &gt;</panel_attributes>
-    <additional_attributes>10.0;20.0;130.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;90.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>896</x>
+      <x>714</x>
       <y>126</y>
-      <w>196</w>
+      <w>168</w>
       <h>56</h>
     </coordinates>
     <panel_attributes>lt=-
@@ -114,6 +99,29 @@ m1=m
 m2=1
 &lt; has
 </panel_attributes>
-    <additional_attributes>10.0;20.0;120.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;100.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>854</x>
+      <y>84</y>
+      <w>294</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>place
+--
+_id: ObjectID PK
+
+name: string
+category: string
+city: string
+state: string
+country: string
+description: string
+image: object {filename: string, mime: string}
+
+</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>

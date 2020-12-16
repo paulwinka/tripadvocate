@@ -4,6 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Travel website for hotels, restaurants, activities in which users can submit reviews, and plan trips.">
+  <meta name="keywords"
+    content="travel, hotels, vacation, holidays, leisure, fun, tourism, reviews, exotic, adventure, ecotourism, international, relaxation, getaway">
   <title>{{title}}</title>
   <link rel="stylesheet" href="/bootswatch/slate/bootstrap.min.css" />
   <link rel="stylesheet" href="/css/main.css">
@@ -29,36 +33,50 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
 
-          <li class="nav-item {{#if (eq user.role 'admin')}} userBannerAdmin{{/if}} {{#if (eq user.role 'member')}} userBannerMember{{/if}} border border-info">
+          <li
+            class="nav-item {{#if (eq user.role 'admin')}} userBannerAdmin{{/if}} {{#if (eq user.role 'member')}} userBannerMember{{/if}} border border-info">
             {{#if user.role}}logged in as: {{user.username}} ({{user.role}}) {{/if}}</li>
 
           {{#if (eq user.role 'admin')}}
-          <li class="{{#if active.profile}}active{{/if}} nav-item"><a href="/account/me" class="nav-link underLink"><i class="fas fa-user"></i> My Profile</a></li>
-          <li class="{{#if active.places}}active{{/if}} nav-item"><a href="/place" class="nav-link underLink"><i class="fas fa-globe"></i> Places</a> </li>
-          <li class="{{#if active.admin}}active{{/if}} nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Admin... </a>
+          <li class="{{#if active.profile}}active{{/if}} nav-item"><a href="/account/me" class="nav-link underLink"><i
+                class="fas fa-user"></i> My Profile</a></li>
+          <li class="{{#if active.places}}active{{/if}} nav-item"><a href="/place" class="nav-link underLink"><i
+                class="fas fa-globe"></i> Places</a> </li>
+          <li class="{{#if active.admin}}active{{/if}} nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#"
+              id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Admin... </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="/place/admin"><i class="fas fa-globe"></i> Places</a>
               <a class="dropdown-item" href="/user/admin"><i class="fas fa-users"></i> Users</a>
               <a class="dropdown-item" href="/review/admin"><i class="fas fa-book-open"></i> Reviews</a>
             </div>
           </li>
-          <li class="nav-item"><a href="/account/logout" class="nav-link underLink"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+          <li class="nav-item"><a href="/account/logout" class="nav-link underLink"><i class="fas fa-sign-out-alt"></i>
+              Logout</a></li>
 
 
           {{else if (eq user.role 'member')}}
-          <li class="nav-item"><a href="/account/logout" class="nav-link underLink"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+          <li class="nav-item"><a href="/account/logout" class="nav-link underLink"><i class="fas fa-sign-out-alt"></i>
+              Logout</a></li>
 
-          <li class="{{#if active.profile}}active{{/if}} nav-item"><a href="/account/me" class="nav-link underLink"><i class="fas fa-user"></i> My
+          <li class="{{#if active.profile}}active{{/if}} nav-item"><a href="/account/me" class="nav-link underLink"><i
+                class="fas fa-user"></i> My
               Profile</a></li>
-          <li class="{{#if active.places}}active{{/if}} nav-item"><a href="/place" class="nav-link underLink"><i class="fas fa-globe"></i> Places</a>
+          <li class="{{#if active.places}}active{{/if}} nav-item"><a href="/place" class="nav-link underLink"><i
+                class="fas fa-globe"></i> Places</a>
           </li>
 
           {{else}}
-          <li class="nav-item"><a href="/account/login" class="nav-link underLink"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-          <li class="nav-item"><a href="/account/register" class="nav-link underLink"><i class="fas fa-bullseye"></i> Register</a></li>
-          <li class="{{#if active.places}}active{{/if}} nav-item"><a href="/place" class="nav-link underLink"><i class="fas fa-globe"></i> Places</a></li>
-          {{!-- <li class="{{#if active.reviews}}active{{/if}} nav-item"><a href="/review" class="nav-link underLink">Reviews</a></li> --}}
-          {{!-- <li class="{{#if active.users}}active{{/if}} nav-item"><a href="/user" class="nav-link underLink">Users</a> </li> --}}
+          <li class="nav-item"><a href="/account/login" class="nav-link underLink"><i class="fas fa-sign-in-alt"></i>
+              Login</a></li>
+          <li class="nav-item"><a href="/account/register" class="nav-link underLink"><i class="fas fa-bullseye"></i>
+              Register</a></li>
+          <li class="{{#if active.places}}active{{/if}} nav-item"><a href="/place" class="nav-link underLink"><i
+                class="fas fa-globe"></i> Places</a></li>
+          {{!-- <li class="{{#if active.reviews}}active{{/if}} nav-item"><a href="/review"
+              class="nav-link underLink">Reviews</a></li> --}}
+          {{!-- <li class="{{#if active.users}}active{{/if}} nav-item"><a href="/user"
+              class="nav-link underLink">Users</a> </li> --}}
 
 
           {{/if}}

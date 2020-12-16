@@ -1,0 +1,4 @@
+User-agent: Googlebot
+Disallow:
+
+sitemap: https://tripadvocate/herokuapp.com/sitemap.xml
