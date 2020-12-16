@@ -1,7 +1,7 @@
 <main class="container mt-5">
   <h1>Edit Place</h1>
   {{!-- <form id="edit-place-form" action="/api/place/{{place.place_id}}" method="POST">
-  <input type="text" name="place_id" id="place_id" value="{{place.place_id}}">
+    <input type="text" name="place_id" id="place_id" value="{{place.place_id}}">
     <div class="form-group">
       <label for="title">Title</label>
       <input type="text" class="form-control" name="title" id="title" value="{{place.title}}">
@@ -48,9 +48,19 @@
       <input type="text" class="form-control" name="name" id="name" value="{{place.name}}">
       <div id="title-error" class="text-danger"></div>
     </div>
-    <div class="form-group">
+    {{!-- <div class="form-group">
       <label for="category">Category</label>
       <input type="text" class="form-control" name="category" id="category" value="{{place.category}}">
+      <div id="category-error" class="text-danger"></div>
+    </div> --}}
+    <div class="form-group d-flex flex-column">
+      <label for="category">Category</label>
+      <select required name="category" id="category" value="{{place.category}}">
+        <option selected value="{{place.category}}">{{place.category}}</option>
+        <option value="activity">activity</option>
+        <option value="hotel">hotel</option>
+        <option value="restaurant">restaurant</option>
+      </select>
       <div id="category-error" class="text-danger"></div>
     </div>
     <div class="form-group">

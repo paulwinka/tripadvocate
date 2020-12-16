@@ -32,11 +32,11 @@ $(() => {
       </div>
     </div>
     <div class="card-body d-flex flex-row justify-content-end align-items-center">
-      <a href="/place/${item._id}" id="btnViewPlace" class="btn btn-sm btn-info" title="View User">
+      <a href="/place/${item._id}" id="btnViewPlace" class="btn btn-sm btn-info" title="View Place">
         <i class="fas fa-eye"></i>
         <span class="sr-only">View User</span>
       </a>
-      <a href="/place/edit/${item._id}" id="btnEditPlace" class="btn btn-primary btn-sm" title="Edit User">
+      <a href="/place/edit/${item._id}" id="btnEditPlace" class="btn btn-primary btn-sm" title="Edit Place">
         <i class="fas fa-edit"></i>
         <span class="sr-only">Edit User</span>
       </a>
