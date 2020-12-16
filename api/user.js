@@ -26,7 +26,7 @@ router.get('/', auth, async (req, res, next) => {
   // debug('get all');
   try {
     const q = req.query.q;
-    debug('searching, starting with q')
+    debug('searching, starting with q');
     debug(q);
     // const category = req.query.category;
     // const sortBy = req.query.sortBy;
@@ -60,19 +60,14 @@ router.get('/', auth, async (req, res, next) => {
     // }
     const pipeline = [
       { $match: matchStage },
-      
 
-      //   {
-      //     $project: {
-      //       name: 1,
-      //       category: 1,
-      //       city: 1,
-      //       state: 1,
-      //       country: 1,
-      //       image: 1,
-      //       relevance: q ? { $meta: 'textScore' } : null,
-      //     },
+      // {
+      //   $project: {
+      //     role: 1,
+      //     email: 1,
+      //     username: 1,
       //   },
+      // },
       //   { $sort: sortStage },
       //   { $skip: (page - 1) * pageSize },
       //   { $limit: pageSize },

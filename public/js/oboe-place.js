@@ -15,7 +15,7 @@ $(() => {
     for (const item of chunk) {
       $('#search-results').append(`
         
-        <div class="col col-md-6 col-lg-4 col-xl-3 rounding-edge">
+        <div class="col-md-6 col-lg-4 col-xl-3 rounding-edge">
           <div class="card mb-2 rounding-edge">
             <div class="card-body m-0 p-0 d-flex flex-row justify-content-center">
               <div class="badge ${item.category == `hotel` ? `badge-light` : ``} ${

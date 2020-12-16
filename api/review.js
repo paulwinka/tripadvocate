@@ -191,6 +191,36 @@ router.post('/:id', auth, async (req, res, next) => {
     sendError(err, res);
   }
 });
+router.post('/:id/admin', auth, async (req, res, next) => {
+  // debug(`add review ${JSON.stringify(req.body)}`);
+  try {
+    const schema = Joi.object({
+      _id: Joi.string().required(),
+      place_id: Joi.string().required(),
+      user_id: Joi.string().required(),
+      title: Joi.string().required(),
+      score: Joi.number().required(),
+      description: Joi.string().required(),
+    });
+    let review = req.body;
+    // if (review.user_id == req.user._id) {
+      review._id = req.params.id;
+      debug('TEST');
+      // debug(review);
+      debug('TEST');
+      review = await schema.validateAsync(review, { abortEarly: false });
+      const updateReview = await db.updateReview(review);
+      // debug(updateReview);
+      res.json(updateReview);
+    // } else {
+    //   res.render('error/basic', { title: 'Not your review!', message: 'you can only edit your own reviews' });
+    // }
+    // review.user_id = req.user._id;
+  } catch (err) {
+    debug(err.stack);
+    sendError(err, res);
+  }
+});
 // ADD REVIEW
 router.post('/:id/add', auth, async (req, res, next) => {
   // debug(`add review ${JSON.stringify(req.body)}`);

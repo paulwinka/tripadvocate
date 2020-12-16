@@ -1,0 +1,46 @@
+
+                            
+/* TEAM */
+
+                            
+Your title: Paul Winka
+
+                            
+Site: paul.winka@gmail.com
+
+                            
+Twitter: paulino636
+
+                            
+Location: St Louis, MO, USA
+
+                         
+                 
+                        [...]
+						
+
+							
+/* THANKS */
+
+					
+Name: Paul Smith, instructor at Ranken Technical College
+
+						
+                 
+                        [...]
+                        
+
+                            
+/* SITE */
+
+                            
+Last update: 2020/12/16
+
+                            
+Standards: HTML5, CSS3
+
+                            
+Components: node.js, jQuery, javascript, joi, express, serve-favicon, oboe, body-parse
+
+                            
+Software: Visual Studio Code, umlet

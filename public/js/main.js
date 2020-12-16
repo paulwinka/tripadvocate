@@ -340,8 +340,8 @@ $(() => {
   });
   $(document).on('click', '.delete-user-from-list', (evt) => {
     const button = $(evt.currentTarget);
-    const id = $(evt.target).data('id');
-    const email = $(evt.target).data('email');
+    const id = button.data('id');
+    const email = button.data('email');
     evt.preventDefault();
     bootbox.confirm({
       title: 'Delete user',
@@ -512,6 +512,32 @@ $(() => {
       .done((res) => {
         if (res.error) {
           $('#edit-review-form output').html(res.error);
+          // alert('edit');
+        } else {
+          window.location = new URL(`/place/${place_id}`, window.location.href);
+        }
+      })
+      .fail((xhr, textStatus, err) => {
+        $('#edit-review-form output').html(`${textStatus}\n{err.stack}`);
+      });
+  });
+
+  $('#edit-review-form-admin').on('submit', (evt) => {
+    evt.preventDefault();
+    const id = $('#_id').val();
+    const place_id = $('#place_id').val();
+
+    const formData = $('#edit-review-form-admin').serialize();
+    console.log(formData);
+    $.ajax({
+      method: 'POST',
+      url: `/api/review/${id}/admin`,
+      data: formData,
+      dataType: 'json',
+    })
+      .done((res) => {
+        if (res.error) {
+          $('#edit-review-form-admin output').html(res.error);
           // alert('edit');
         } else {
           window.location = new URL(`/place/${place_id}`, window.location.href);
