@@ -13,7 +13,6 @@
   <div class="row">
     <div class="col-md-8">
       <div class="card">
-        <div class="card-img-top text-center">
           <div class="card-body text-left">
 
             <li class="list-group-item py-1">id: {{userToView._id}}</li>
@@ -22,7 +21,7 @@
             <li class="list-group-item py-1">last name: {{userToView.last_name}}</li>
             <li class="list-group-item py-1">email: {{userToView.email}}</li>
             <li class="list-group-item py-1">email verified: {{userToView.is_email_verified}}</li>
-            <li class="list-group-item py-1">password: {{userToView.password}}</li>
+            {{!-- <li class="list-group-item py-1">password: {{userToView.password}}</li> --}}
             <li class="list-group-item py-1">city: {{userToView.city}}</li>
             <li class="list-group-item py-1">state: {{userToView.state}}</li>
             <li class="list-group-item py-1">Country: {{userToView.country}}</li>
@@ -36,13 +35,14 @@
                 data-id="{{userToView._id}}" data-first="{{userToView.first_name}}" data-last="{{userToView.last_name}}"
                 data-username="{{userToView.username}}" data-role={{userToView.role}} data-city="{{userToView.city}}"
                 data-state="{{userToView.state}}" data-country="{{userToView.country}}">
-                <i class="fas fa-edit"></i>Edit User</button></td>
+                <i class="fas fa-edit"></i> Edit User</button></td>
 
-            <button id="delete-user-from-view" href="/user/edit/{{place.place_id}}" class="btn btn-danger"
-              data-id="{{userToView.user_id}}" data-title="{{userToView.first_name}} {{userToView.last_name}} ">Delete
-              User</a>
+            <button title="Delete User" id="delete-user-from-view" class="btn btn-sm btn-danger"
+              data-id="{{userToView._id}}" data-email="{{userToView.email}}">
+              <i class="fas fa-trash"></i>
+              <span class="sr-only">Delete User</span>
+            </button>
           </div>
-        </div>
       </div>
     </div>
   </div>

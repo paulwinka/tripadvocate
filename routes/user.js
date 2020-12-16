@@ -16,7 +16,21 @@ router.use(express.urlencoded({ extended: false }));
 router.use(express.json());
 
 //connect to the database
+// router.get('/', async (req, res, next) => {
+//   try {
+//     const auth = req.user;
+//     const active = {};
+//     active.reviews = true;
 
+//     res.render('user/review-list', {
+//       title: 'Home Page: reviews to see',
+//       user: auth,
+//       active,
+//     });
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 // actual routes
 // VIEW ALL USERS
 router.get('/admin', auth, admin, async (req, res, next) => {
@@ -24,19 +38,20 @@ router.get('/admin', auth, admin, async (req, res, next) => {
     const user = req.user;
     const active = {};
     active.admin = true;
-    const search = req.query.search;
-    const pageSize = parseInt(req.query.pageSize) || 10;
-    const pageNumber = parseInt(req.query.page) || 1;
 
-    const connection = await db.connect();
-    const cursor = connection.collection('user').find();
-    const users = await cursor.toArray();
+    // const search = req.query.search;
+    // const pageSize = parseInt(req.query.pageSize) || 10;
+    // const pageNumber = parseInt(req.query.page) || 1;
+
+    // const connection = await db.connect();
+    // const cursor = connection.collection('user').find();
+    // const users = await cursor.toArray();
     res.render('user/user-admin', {
       title: 'Users - Admin',
-      users,
+      // users,
       user: user,
       active,
-      search,
+      // search,
     });
   } catch (err) {
     next(err);

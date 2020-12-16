@@ -2,7 +2,8 @@
 // more than one interface importing libraries
 const db = require('../db');
 const express = require('express');
-
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 const debug = require('debug')('app:api:user');
 const Joi = require('joi');
 
@@ -20,6 +21,82 @@ const sendError = (err, res) => {
     res.json({ error: err.message });
   }
 };
+
+router.get('/', auth, async (req, res, next) => {
+  // debug('get all');
+  try {
+    const q = req.query.q;
+    debug('searching, starting with q')
+    debug(q);
+    // const category = req.query.category;
+    // const sortBy = req.query.sortBy;
+    // const page = parseInt(req.query.page) || 1;
+    // const pageSize = parseInt(req.query.pageSize) || 100;
+    const collation = { locale: 'en_US', strength: 1 };
+
+    const matchStage = {};
+    if (q) {
+      matchStage.$text = { $search: q };
+    }
+    // if (category) {
+    //   matchStage.category = { $eq: category };
+    // }
+
+    // let sortStage = null;
+    // switch (sortBy) {
+    //   case 'name':
+    //     sortStage = { name: 1 };
+    //     break;
+    //   case 'country':
+    //     sortStage = { country: 1 };
+    //     break;
+    //   case 'category':
+    //     sortStage = { category: 1 };
+    //     break;
+    //   case 'relevance':
+    //   default:
+    //     sortStage = q ? { relevance: -1 } : { name: 1 };
+    //     break;
+    // }
+    const pipeline = [
+      { $match: matchStage },
+
+      //   {
+      //     $project: {
+      //       name: 1,
+      //       category: 1,
+      //       city: 1,
+      //       state: 1,
+      //       country: 1,
+      //       image: 1,
+      //       relevance: q ? { $meta: 'textScore' } : null,
+      //     },
+      //   },
+      //   { $sort: sortStage },
+      //   { $skip: (page - 1) * pageSize },
+      //   { $limit: pageSize },
+    ];
+
+    const connection = await db.connect();
+    const cursor = connection.collection('user').aggregate(pipeline, { collation: collation });
+    // debug(cursor);
+    // debug('cursor?');
+    // debug('cursor?');
+
+    // write the JSON file
+    res.type('application/json');
+    res.write('[\n');
+    for await (const doc of cursor) {
+      res.write(JSON.stringify(doc));
+      // debug(JSON.stringify(doc));
+      res.write(',\n');
+    }
+    res.end('null]');
+  } catch (err) {
+    debug(err.stack);
+    // sendError(err, res);
+  }
+});
 
 // something I found to help with mongo json responses.
 const sendJsonResponse = (res, status, content) => {
@@ -97,13 +174,15 @@ router.put('/:_id', async (req, res, next) => {
 // DELETE
 router.delete('/:id', async (req, res, next) => {
   try {
+    debug('delete called');
     const schema = Joi.string().min(1).required().label('id');
     const id = await schema.validateAsync(req.params.id);
     const user = await db.getUserById(id);
-    debug(user);
-    debug(user._id)
+    // debug(user);
+    // debug(user._id);
     user.user_id = req.params.id.toString();
     const results = await db.deleteUser(user);
+    debug(results);
     res.json(results);
   } catch (err) {
     sendError(err, res);

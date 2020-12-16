@@ -28,17 +28,22 @@
             class="form needs-validation mt-3" novalidate>
             <div class="form-group">
               <label for="name">Name</label>
-              <input type="text" class="form-control" name="name" id="name">
+              <input required type="text" class="form-control" name="name" id="name">
               <div id="title-error" class="text-danger"></div>
             </div>
             <div class="form-group">
               <label for="category">Category</label>
-              <input type="text" class="form-control" name="category" id="category">
+              <select required name="category" id="category">
+                <option selected value="">Choose Category</option>
+                <option value="activity">activity</option>
+                <option value="hotel">hotel</option>
+                <option value="restaurant">restaurant</option>
+              </select>
               <div id="category-error" class="text-danger"></div>
             </div>
             <div class="form-group">
               <label for="city">City</label>
-              <input type="text" class="form-control" name="city" id="city">
+              <input required type="text" class="form-control" name="city" id="city">
               <div id="city-error" class="text-danger"></div>
             </div>
             <div class="form-group">
@@ -48,7 +53,7 @@
             </div>
             <div class="form-group">
               <label for="country">Country</label>
-              <input type="text" class="form-control" name="country" id="country">
+              <input required type="text" class="form-control" name="country" id="country">
               <div id="country-error" class="text-danger"></div>
             </div>
             <div class="form-group">
@@ -65,7 +70,7 @@
                 cols="50"></textarea>
             </div>
             <div class="form-group">
-              <button class="btn btn-primary" type="submit">Add Place</button>
+              <button class="btn btn-primary" type="submit"><i class="fas fa-globe"></i> Add Place</button>
               <a href="/place/admin" class="btn btn-secondary"><i class="fas fa-ban"></i> Cancel</a>
               <input class="btn btn-secondary" type="reset" value="Reset">
             </div>

@@ -1,53 +1,57 @@
-<div class="row">
-  <div class="col-md-8">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/Admin">Admin Main</a></li>
-        <li class="breadcrumb-item active">Administrate Users</li>
-      </ol>
-    </nav>
+<main>
+  <div class="row">
+    <div class="col-md-8">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/Admin">Admin Main</a></li>
+          <li class="breadcrumb-item active">Administrate Users</li>
+        </ol>
+      </nav>
+    </div>
   </div>
-</div>
 
-<div class="col-12 col-lg-12 card my-2 my-lg-3">
-  {{!-- <img src="images/emoji1_mod.jpg" alt="" class="card-img-top"> --}}
-  <form id="search-user-form" method="GET">
-    <fieldset>
-      {{!-- SEARCH BAR --}}
-      <legend>Search</legend>
-      <div class="form-group">
-        <label for="search" class="sr-only">
-          Search
-        </label>
-        <div class="input-group mb-3">
-          <input id="search" name="search" type="search" class="form-control" placeholder="search..."
-            value="{{search}}" />
-          <div class="input-group-append">
-            <button type="submit" class="btn btn-primary">
-              Search
-            </button>
+  <div class="col-12 col-lg-12 card my-2 my-lg-3">
+    {{!-- <img src="images/emoji1_mod.jpg" alt="" class="card-img-top"> --}}
+    <form id="search-user-form" method="GET">
+      <fieldset>
+        {{!-- SEARCH BAR --}}
+        <legend>Search</legend>
+        <div class="form-group">
+          <label for="search" class="sr-only">
+            Search
+          </label>
+          <div class="input-group mb-3">
+            <input id="placeSearch" name="q" type="search" class="form-control" placeholder="search..." value="{{search}}" />
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-primary">
+                Search
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      {{!-- DROP DOWN --}}
-      {{!-- <div class="form-group">
-        <label for="type" class="">
-          Sort by &uarr; or &darr; :
-        </label>
-        <select id="sorter-drop" name="sorter" class="custom-select w-auto">
-          {{> select-option-list sorterOptionList}}
-        </select> --}}
+        {{!-- DROP DOWN --}}
+        {{!-- <div class="form-group">
+          <label for="type" class="">
+            Sort by &uarr; or &darr; :
+          </label>
+          <select id="sorter-drop" name="sorter" class="custom-select w-auto">
+            {{> select-option-list sorterOptionList}}
+          </select> --}}
 
-    </fieldset>
-  </form>
+      </fieldset>
+    </form>
 
 
-  <div id="searchResults">
-    {{> user-admin this}}
   </div>
-
-
-</div>
+  <div class="d-flex align-items-center">
+    <span id="stream-data-spinner" class="spinner-border m-2"></span>
+    <span id="stream-data-seen" class="m-2" style="font-weight: 900;">
+      Loading...
+    </span>
+  </div>
+  <div id="stream-data" class="d-flex flex-wrap"></div>
+  <div id="search-results"> </div>
+</main>
 </div>
 
 
@@ -119,3 +123,9 @@
     </div>
   </div>
 </div>
+
+
+
+
+<script src="/js/oboe-browser.min.js"></script>
+<script defer src="/js/oboe-user-admin.js"></script>

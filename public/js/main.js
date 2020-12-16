@@ -269,23 +269,23 @@ $(() => {
         alert('fail');
       });
   });
-  $('#search-user-form').on('submit', (evt) => {
-    evt.preventDefault();
-    const formData = $('#search-user-form').serialize();
-    $.ajax({
-      method: 'GET',
-      url: '/user',
-      data: formData,
-      // dataType: 'json',
-    })
-      .done((res) => {
-        $('#searchResults').html(res);
-      })
-      .fail((xhr, textStatus, err) => {
-        alert('fail');
-        $('#add-product-form output').html(`${textStatus}\n${err}`);
-      });
-  });
+  // $('#search-user-form').on('submit', (evt) => {
+  //   evt.preventDefault();
+  //   const formData = $('#search-user-form').serialize();
+  //   $.ajax({
+  //     method: 'GET',
+  //     url: '/user',
+  //     data: formData,
+  //     // dataType: 'json',
+  //   })
+  //     .done((res) => {
+  //       $('#searchResults').html(res);
+  //     })
+  //     .fail((xhr, textStatus, err) => {
+  //       alert('fail');
+  //       $('#add-product-form output').html(`${textStatus}\n${err}`);
+  //     });
+  // });
   // CHANGE CATEGORY OF THE PLACE AFTER DROPDOWN CHANGED IN PLACES LIST VIEW.
   $('#category-drop').on('change', (evt) => {
     $('#search-place-form').trigger('submit');
@@ -338,8 +338,8 @@ $(() => {
       },
     });
   });
-
-  $('.delete-user-from-list').on('click', (evt) => {
+  $(document).on('click', '.delete-user-from-list', (evt) => {
+    const button = $(evt.currentTarget);
     const id = $(evt.target).data('id');
     const email = $(evt.target).data('email');
     evt.preventDefault();
@@ -363,8 +363,11 @@ $(() => {
             dataType: 'json',
           })
             .done((res) => {
-              // alert(res);
-              window.location.reload();
+              if (res.error) {
+                alert(res.error);
+              } else {
+                button.parents('.col').remove();
+              }
             })
             .fail((xhr, textStatus, err) => {
               alert(`${textStatus}\n${err}`);
@@ -443,10 +446,10 @@ $(() => {
   });
   $('#delete-user-from-view').on('click', (evt) => {
     const id = $(evt.target).data('id');
-    const title = $(evt.target).data('title');
+    const email = $(evt.target).data('email');
     bootbox.confirm({
       title: 'Delete user',
-      message: `Delete user with id of ${id} and name of ${title}?`,
+      message: `Delete user ${id},  ${email}?`,
       buttons: {
         cancel: {
           label: '<i class="fa fa-times"></i> Cancel',
@@ -464,7 +467,7 @@ $(() => {
             dataType: 'json',
           })
             .done((res) => {
-              window.location = new URL(`/user/`, window.location.href);
+              window.location = new URL(`/user/admin`, window.location.href);
             })
             .fail((xhr, textStatus, err) => {
               alert(`${textStatus}\n${err}`);
@@ -706,24 +709,24 @@ $(() => {
     $('[name=country]').val(country);
   });
   // edit user -- step 1 of 2, show edit modal;
-  $('#edit_user').on('show.bs.modal', (e) => {
-    const id = e.relatedTarget.dataset.id;
-    const first_name = e.relatedTarget.dataset.first;
-    const last_name = e.relatedTarget.dataset.last;
-    const username = e.relatedTarget.dataset.username;
-    const role = e.relatedTarget.dataset.role;
-    const city = e.relatedTarget.dataset.city;
-    const state = e.relatedTarget.dataset.state;
-    const country = e.relatedTarget.dataset.country;
-    $('[name=_id]').val(id);
-    $('[name=first_name]').val(first_name);
-    $('[name=last_name]').val(last_name);
-    $('[name=username]').val(username);
-    $('[name=role]').val(role);
-    $('[name=city]').val(city);
-    $('[name=state]').val(state);
-    $('[name=country]').val(country);
-  });
+  // $('#edit_user').on('show.bs.modal', (e) => {
+  //   const id = e.relatedTarget.dataset.id;
+  //   const first_name = e.relatedTarget.dataset.first;
+  //   const last_name = e.relatedTarget.dataset.last;
+  //   const username = e.relatedTarget.dataset.username;
+  //   const role = e.relatedTarget.dataset.role;
+  //   const city = e.relatedTarget.dataset.city;
+  //   const state = e.relatedTarget.dataset.state;
+  //   const country = e.relatedTarget.dataset.country;
+  //   $('[name=_id]').val(id);
+  //   $('[name=first_name]').val(first_name);
+  //   $('[name=last_name]').val(last_name);
+  //   $('[name=username]').val(username);
+  //   $('[name=role]').val(role);
+  //   $('[name=city]').val(city);
+  //   $('[name=state]').val(state);
+  //   $('[name=country]').val(country);
+  // });
   // edit user -- step 2 of 2, submit form with PUT;
   $('#edit-user-form-modal').on('submit', (e) => {
     e.preventDefault();

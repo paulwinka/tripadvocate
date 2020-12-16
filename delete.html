@@ -211,3 +211,13 @@ ${ item.places && item.places[0] && item.places[0].image ? `<img class="card-img
     </div>
   </div>
 </div>
+
+
+    <button title="Delete User"
+    id="delete-user-from-view"
+    class="delete-user-from-list btn btn-sm btn-danger" 
+    data-id="{{userToView._id}}"
+    data-email="{{userToView.email}}">
+      <i class="fas fa-trash"></i>
+      <span class="sr-only">Delete User</span>
+    </button>
